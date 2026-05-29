@@ -31,6 +31,10 @@ export default defineConfig({
         manualChunks(id) {
           // Put react core and third party modules in separate chunks for aggressive caching
           if (id.includes("node_modules")) {
+            const normalizedId = id.replaceAll("\\", "/");
+            if (normalizedId.includes("/node_modules/lenis/")) {
+              return "lenis";
+            }
             if (id.includes("react-dom") || id.includes("react-helmet-async") || id.includes("react-router-dom")) {
               return "vendor-react";
             }

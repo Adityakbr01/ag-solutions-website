@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useLenis } from "lenis/react";
 import { Outlet, useLocation } from "react-router-dom";
 import { SkipToContent } from "@/components/ui/SkipToContent";
 import { SiteFooter } from "./SiteFooter";
@@ -7,7 +6,6 @@ import { SiteHeader } from "./SiteHeader";
 
 function ScrollToHash() {
   const { hash, pathname } = useLocation();
-  const lenis = useLenis();
 
   useEffect(() => {
     if (!hash) {
@@ -21,6 +19,8 @@ function ScrollToHash() {
         return;
       }
 
+      const lenis = window.__lenis;
+
       if (lenis) {
         lenis.scrollTo(target);
         return;
@@ -28,7 +28,7 @@ function ScrollToHash() {
 
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-  }, [hash, lenis, pathname]);
+  }, [hash, pathname]);
 
   return null;
 }

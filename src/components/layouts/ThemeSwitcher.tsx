@@ -1,5 +1,4 @@
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 const themeOptions = [
   { label: "Light", value: "light" },
@@ -8,12 +7,7 @@ const themeOptions = [
 ] as const;
 
 export function ThemeSwitcher() {
-  const [mounted, setMounted] = useState(false);
   const { setTheme, theme = "system" } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <div className="flex flex-col gap-3 md:items-end">
@@ -26,7 +20,7 @@ export function ThemeSwitcher() {
         role="group"
       >
         {themeOptions.map((option) => {
-          const isActive = mounted && theme === option.value;
+          const isActive = theme === option.value;
 
           return (
             <button

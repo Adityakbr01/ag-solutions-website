@@ -1,10 +1,9 @@
 import React from "react";
-import { ReactLenis } from "lenis/react";
 import { RouterProvider } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "next-themes";
+import SmoothScroll from "@/components/common/SmoothScroll";
 import { router } from "@/router";
-import "lenis/dist/lenis.css";
 
 /**
  * Root Application Component.
@@ -19,9 +18,8 @@ export const App: React.FC = () => {
         disableTransitionOnChange
         enableSystem
       >
-        <ReactLenis root options={{ anchors: true, autoRaf: true }}>
-          <RouterProvider router={router} />
-        </ReactLenis>
+        <SmoothScroll />
+        <RouterProvider router={router} />
       </ThemeProvider>
     </HelmetProvider>
   );

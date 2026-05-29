@@ -63,8 +63,6 @@ export const heroTechRows = [
   { name: "Node / PHP", scope: "Backend", tone: "green" },
 ];
 
-export const heroBarHeights = ["55%", "80%", "40%", "90%", "65%"];
-
 export const stats = [
   { value: "10", suffix: "+", label: "Years of Service" },
   { value: "200", suffix: "+", label: "Satisfied Clients" },

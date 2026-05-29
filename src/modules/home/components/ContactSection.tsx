@@ -80,7 +80,7 @@ export function ContactSection() {
               />
               <Button
                 type="submit"
-                className="min-h-12 cursor-pointer flex items-center justify-center gap-2 rounded-full border-0 bg-accent px-7 text-sm font-semibold text-accent-foreground hover:bg-accent/85"
+                className="min-h-12  cursor-pointer flex items-center justify-center gap-2 rounded-full border-0 bg-accent px-7 text-sm font-semibold text-accent-foreground hover:bg-accent/85"
               >
                 <span>Subscribe</span>
                 <HomeIcon name="arrowRight" className="h-4 w-4" />

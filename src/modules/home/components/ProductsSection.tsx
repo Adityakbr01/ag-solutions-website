@@ -81,7 +81,7 @@ export function ProductsSection() {
                 <HomeButtonLink
                   href="#contact"
                   variant="ghost"
-                  className="mt-7"
+                  className="mt-7 home-wave-cta"
                 >
                   Learn More
                 </HomeButtonLink>

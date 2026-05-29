@@ -4,9 +4,9 @@ import type { RouteObject } from "react-router-dom";
 import Layout from "@/components/layouts/Layout";
 import LoadingFallback from "@/components/common/LoadingFallback";
 import ErrorBoundary from "@/components/common/ErrorBoundary";
+import HomePage from "@/modules/home/pages/HomePage";
 
-// Lazy load route pages directly to allow precise bundler code splitting and tree shaking
-const HomePage = React.lazy(() => import("@/modules/home/pages/HomePage"));
+// Keep secondary pages lazy, but render the homepage eagerly for faster first paint.
 const AboutPage = React.lazy(() => import("@/modules/about/pages/AboutPage"));
 const NotFound = React.lazy(() => import("@/components/common/NotFound"));
 
@@ -45,6 +45,12 @@ const lazyRoute = (Component: React.ComponentType) => (
   </ErrorBoundary>
 );
 
+const route = (Component: React.ComponentType) => (
+  <ErrorBoundary>
+    <Component />
+  </ErrorBoundary>
+);
+
 /**
  * Centralized Route Configuration mapping paths to layout shells and lazy pages
  */
@@ -55,7 +61,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: lazyRoute(HomePage),
+        element: route(HomePage),
       },
       {
         path: "about",

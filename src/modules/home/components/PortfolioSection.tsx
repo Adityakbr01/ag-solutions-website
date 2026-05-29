@@ -44,7 +44,11 @@ export function PortfolioSection() {
         </FadeIn>
 
         <div className="mt-10 text-center">
-          <HomeButtonLink href="#contact" variant="ghost">
+          <HomeButtonLink
+            className="home-wave-cta"
+            href="#contact"
+            variant="ghost"
+          >
             View All Projects
           </HomeButtonLink>
         </div>
