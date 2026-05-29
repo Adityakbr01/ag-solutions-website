@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Exclude potential sensitive paths if any
+Disallow: /admin/
+Disallow: /api/
+
+# Central Sitemap reference
+Sitemap: https://ag-solutions-website.pages.dev/sitemap.xml
