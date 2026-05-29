@@ -5,7 +5,7 @@ import { HomeButtonLink } from "./HomeButtonLink";
 
 export const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden px-5 py-20 md:px-12 lg:py-28">
+    <section className="relative overflow-hidden px-5 py-16 md:px-12">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="mx-auto grid min-w-0 max-w-7xl items-center gap-14 lg:grid-cols-2">
         <FadeIn className="min-w-0 max-w-2xl">
@@ -108,9 +108,7 @@ export const HeroSection = () => {
               <p className="mb-2 text-xs uppercase tracking-[0.08em] text-muted-foreground">
                 Client Retention
               </p>
-              <p className="font-display text-3xl font-bold text-info">
-                95%
-              </p>
+              <p className="font-display text-3xl font-bold text-info">95%</p>
             </FadeIn>
           </div>
         </div>
