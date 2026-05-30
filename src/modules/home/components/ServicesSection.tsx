@@ -1,6 +1,6 @@
 import { services } from "../data/homeContent";
 import { FadeIn } from "./FadeIn";
-import { HomeIcon } from "./HomeIcon";
+import { HomeButtonLink } from "./HomeButtonLink";
 import { SectionHeader } from "./SectionHeader";
 
 export function ServicesSection() {
@@ -17,37 +17,42 @@ export function ServicesSection() {
         </FadeIn>
 
         <FadeIn>
-          <div className="grid overflow-hidden rounded-lg border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid items-stretch overflow-hidden rounded-lg border border-border bg-border [grid-auto-rows:minmax(0,1fr)] md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
               <article
-                className={`group relative min-h-[280px] bg-card p-8 transition hover:bg-muted dark:bg-[#0a0a0a] dark:hover:bg-[#131312] ${
-                  service.highlighted ? "bg-accent/10 dark:bg-accent/[0.03]" : ""
+                className={`service-card group relative flex h-full min-h-[390px] min-w-0 flex-col overflow-hidden bg-card p-8 transition duration-300 hover:bg-muted hover:shadow-xl hover:shadow-foreground/5 dark:bg-[#0a0a0a] dark:hover:bg-[#131312] ${
+                  service.highlighted
+                    ? "bg-accent/10 dark:bg-accent/[0.03]"
+                    : ""
                 }`}
                 key={service.title}
               >
-                <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-accent transition group-hover:scale-x-100" />
-                <div
-                  className={`mb-6 flex h-12 w-12 items-center justify-center rounded-lg border ${
-                    service.highlighted
-                      ? "border-accent/30 bg-accent/15 text-accent-strong dark:text-accent"
-                      : "border-accent/20 bg-accent/10 text-accent-strong dark:text-accent"
-                  }`}
-                >
-                  <HomeIcon name={service.icon} className="h-6 w-6" />
+                <div className="relative z-10 mb-7 flex h-28 w-full items-center justify-start">
+                  <img
+                    src={service.image.src}
+                    alt={service.image.alt}
+                    width="96"
+                    height="96"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-24 w-24 object-contain transition-transform duration-300 group-hover:scale-105"
+                  />
                 </div>
-                <h3 className="font-display text-xl font-bold text-card-foreground">
+                <h3 className="relative z-10 min-h-14 font-display text-xl font-bold leading-7 text-card-foreground">
                   {service.title}
                 </h3>
-                <p className="mt-3 text-sm font-light leading-7 text-muted-foreground">
+                <p className="relative z-10 mt-3 text-sm font-light leading-7 text-muted-foreground">
                   {service.description}
                 </p>
-                <a
-                  href={service.href}
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-accent-strong transition hover:text-foreground dark:text-accent"
-                >
-                  {service.highlighted ? "Contact us" : "Learn more"}
-                  <HomeIcon name="arrowRight" className="h-4 w-4" />
-                </a>
+                <div className="relative z-10 mt-auto pt-8">
+                  <HomeButtonLink
+                    href={service.href}
+                    className="home-wave-cta px-6"
+                    variant="ghost"
+                  >
+                    {service.highlighted ? "Contact us" : "Learn more"}
+                  </HomeButtonLink>
+                </div>
               </article>
             ))}
           </div>

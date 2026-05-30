@@ -23,12 +23,15 @@ export function HomeButtonLink({
 }: HomeButtonLinkProps) {
   return (
     <a
-      className={`relative inline-flex min-h-12 items-center justify-center gap-2 overflow-hidden rounded-full px-7 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${variantClasses[variant]} ${className}`}
+      className={`relative font-NeueMachina inline-flex min-h-12 items-center justify-center gap-2 overflow-hidden rounded-full px-7 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${variantClasses[variant]} ${className}`}
       {...props}
     >
       <span className="relative z-10">{children}</span>
       {showArrow ? (
-        <HomeIcon name="arrowRight" className="relative z-10 h-4 w-4" />
+        <HomeIcon
+          name="arrowRight"
+          className="relative transform-gpu z-10 h-4 w-4"
+        />
       ) : null}
     </a>
   );

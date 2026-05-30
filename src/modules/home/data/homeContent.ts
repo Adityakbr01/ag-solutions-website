@@ -73,7 +73,10 @@ export const stats = [
 export const services: Array<{
   title: string;
   description: string;
-  icon: HomeIconName;
+  image: {
+    alt: string;
+    src: string;
+  };
   href: string;
   highlighted?: boolean;
 }> = [
@@ -81,42 +84,60 @@ export const services: Array<{
     title: "Web Development",
     description:
       "End-to-end web solutions combining the latest technologies with robust project management, from landing pages to complex enterprise platforms.",
-    icon: "globe",
+    image: {
+      alt: "Web development interface illustration",
+      src: "/images/apiImage.png",
+    },
     href: "#contact",
   },
   {
     title: "Mobile App Development",
     description:
       "Enterprise mobility solutions for iOS and Android, from strategy and design through development, testing, and deployment.",
-    icon: "smartphone",
+    image: {
+      alt: "Mobile app development illustration",
+      src: "/images/mobileDevelopemnt.png",
+    },
     href: "#contact",
   },
   {
     title: "Desktop Applications",
     description:
       "Legacy migrations or greenfield builds with lower risk, clear timelines, and practical cross-platform desktop expertise.",
-    icon: "monitor",
+    image: {
+      alt: "Desktop application solution illustration",
+      src: "/images/sale.png",
+    },
     href: "#contact",
   },
   {
     title: "Email Marketing",
     description:
       "Tailored campaigns for each audience segment that engage new customers and nurture existing relationships with measurable ROI.",
-    icon: "send",
+    image: {
+      alt: "Email marketing campaign illustration",
+      src: "/images/email-marketing-campaign-announcement.png",
+    },
     href: "#contact",
   },
   {
     title: "Digital Marketing",
     description:
       "PPC, SEO, and SMM strategies that give your brand first-page visibility and stronger reach across search and social channels.",
-    icon: "trendingUp",
+    image: {
+      alt: "Digital marketing promotion illustration",
+      src: "/images/online-marketing-promotion-3d-cartoon.png",
+    },
     href: "#contact",
   },
   {
     title: "Custom Solutions",
     description:
       "Have a unique challenge? We build bespoke software that solves problems no off-the-shelf product can handle.",
-    icon: "sparkles",
+    image: {
+      alt: "Custom software solution illustration",
+      src: "/images/customeSolution.png",
+    },
     href: "#contact",
     highlighted: true,
   },
