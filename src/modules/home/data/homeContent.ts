@@ -86,7 +86,7 @@ export const services: Array<{
       "End-to-end web solutions combining the latest technologies with robust project management, from landing pages to complex enterprise platforms.",
     image: {
       alt: "Web development interface illustration",
-      src: "/images/apiImage.png",
+      src: "/images/apiImage.webp",
     },
     href: "#contact",
   },
@@ -96,7 +96,7 @@ export const services: Array<{
       "Enterprise mobility solutions for iOS and Android, from strategy and design through development, testing, and deployment.",
     image: {
       alt: "Mobile app development illustration",
-      src: "/images/mobileDevelopemnt.png",
+      src: "/images/mobileDevelopemnt.webp",
     },
     href: "#contact",
   },
@@ -106,7 +106,7 @@ export const services: Array<{
       "Legacy migrations or greenfield builds with lower risk, clear timelines, and practical cross-platform desktop expertise.",
     image: {
       alt: "Desktop application solution illustration",
-      src: "/images/sale.png",
+      src: "/images/sale.webp",
     },
     href: "#contact",
   },
@@ -116,7 +116,7 @@ export const services: Array<{
       "Tailored campaigns for each audience segment that engage new customers and nurture existing relationships with measurable ROI.",
     image: {
       alt: "Email marketing campaign illustration",
-      src: "/images/email-marketing-campaign-announcement.png",
+      src: "/images/email-marketing-campaign-announcement.webp",
     },
     href: "#contact",
   },
@@ -126,7 +126,7 @@ export const services: Array<{
       "PPC, SEO, and SMM strategies that give your brand first-page visibility and stronger reach across search and social channels.",
     image: {
       alt: "Digital marketing promotion illustration",
-      src: "/images/online-marketing-promotion-3d-cartoon.png",
+      src: "/images/online-marketing-promotion-3d-cartoon.webp",
     },
     href: "#contact",
   },
@@ -136,7 +136,7 @@ export const services: Array<{
       "Have a unique challenge? We build bespoke software that solves problems no off-the-shelf product can handle.",
     image: {
       alt: "Custom software solution illustration",
-      src: "/images/customeSolution.png",
+      src: "/images/customeSolution.webp",
     },
     href: "#contact",
     highlighted: true,
