@@ -3,6 +3,22 @@ import { FadeIn } from "./FadeIn";
 import { HomeButtonLink } from "./HomeButtonLink";
 import { SectionHeader } from "./SectionHeader";
 
+const getServiceImageSrcSet = (src: string) => {
+  const isOptimized = [
+    "apiImage.webp",
+    "mobileDevelopemnt.webp",
+    "sale.webp",
+    "customeSolution.webp",
+    "online-marketing-promotion-3d-cartoon.webp",
+  ].some((name) => src.includes(name));
+
+  if (isOptimized) {
+    const imageName = src.split("/").pop()?.replace(/\.(png|webp)$/, "");
+    return `/images/hero-optimized/${imageName}-192.webp 192w, /images/hero-optimized/${imageName}-384.webp 384w`;
+  }
+  return undefined;
+};
+
 export function ServicesSection() {
   return (
     <section id="services" className="px-5 py-24 md:px-12">
@@ -30,6 +46,8 @@ export function ServicesSection() {
                 <div className="relative z-10 mb-7 flex h-28 w-full items-center justify-start">
                   <img
                     src={service.image.src}
+                    srcSet={getServiceImageSrcSet(service.image.src)}
+                    sizes="(max-width: 639px) 96px, 192px"
                     alt={service.image.alt}
                     width="96"
                     height="96"

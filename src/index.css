@@ -324,6 +324,7 @@ html.lenis body {
 }
 
 .hero-banner-dot {
+  position: relative;
   width: 0.45rem;
   height: 0.45rem;
   padding: 0;
@@ -336,6 +337,16 @@ html.lenis body {
     width 220ms ease,
     background 220ms ease,
     transform 220ms ease;
+}
+
+.hero-banner-dot::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  transform: translate(-50%, -50%);
 }
 
 .hero-banner-dot:hover:not(.is-active) {

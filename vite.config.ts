@@ -14,6 +14,22 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     react(),
     tailwindcss(),
+    {
+      name: "inline-css",
+      transformIndexHtml(html, ctx) {
+        if (!ctx.bundle) return html;
+        let newHtml = html;
+        for (const [fileName, file] of Object.entries(ctx.bundle)) {
+          if (fileName.endsWith(".css") && "source" in file) {
+            const cssContent = file.source.toString();
+            const cleanFileName = fileName.split("/").pop();
+            const linkRegex = new RegExp(`<link[^>]*href="[^"]*${cleanFileName}"[^>]*>`, "g");
+            newHtml = newHtml.replace(linkRegex, `<style>${cssContent}</style>`);
+          }
+        }
+        return newHtml;
+      },
+    },
   ],
   resolve: {
     alias: {
