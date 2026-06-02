@@ -5,6 +5,7 @@ import Layout from "@/components/layouts/Layout";
 import LoadingFallback from "@/components/common/LoadingFallback";
 import ErrorBoundary from "@/components/common/ErrorBoundary";
 import HomePage from "@/modules/home/pages/HomePage";
+import ContactPage from "@/modules/contact/pages/ContactPage";
 
 // Keep secondary pages lazy, but render the homepage eagerly for faster first paint.
 const AboutPage = React.lazy(() => import("@/modules/about/pages/AboutPage"));
@@ -32,6 +33,7 @@ export interface SitemapRouteMeta {
 export const sitemapRoutes: SitemapRouteMeta[] = [
   { path: "/", changefreq: "daily", priority: 1.0 },
   { path: "/about", changefreq: "monthly", priority: 0.8 },
+  { path: "/contact", changefreq: "monthly", priority: 0.8 },
 ];
 
 /**
@@ -66,6 +68,10 @@ export const routes: RouteObject[] = [
       {
         path: "about",
         element: lazyRoute(AboutPage),
+      },
+      {
+        path: "contact",
+        element: route(ContactPage),
       },
       {
         path: "*",

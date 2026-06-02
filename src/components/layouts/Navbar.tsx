@@ -228,9 +228,14 @@ export function Navbar() {
 
   const closeMenu = () => setIsOpen(false);
   const closeDropdown = () => setActiveDropdown(null);
-  const aboutLink = navLinks.find((link) => link.label === "About");
+  const leadingLinks = navLinks.filter(
+    (link) => link.label === "Home" || link.label === "About",
+  );
   const remainingLinks = navLinks.filter(
-    (link) => link.label !== "About" && link.label !== "Products",
+    (link) =>
+      link.label !== "Home" &&
+      link.label !== "About" &&
+      link.label !== "Products",
   );
 
   return (
@@ -254,18 +259,18 @@ export function Navbar() {
             className="relative z-50 flex flex-none items-center justify-center"
           >
             <NavigationMenuList className="flex list-none items-center gap-8">
-              {aboutLink ? (
-                <NavigationMenuItem className="relative">
+              {leadingLinks.map((link) => (
+                <NavigationMenuItem className="relative" key={link.href}>
                   <NavigationMenuLink asChild>
                     <a
-                      href={homeHref(aboutLink.href)}
+                      href={homeHref(link.href)}
                       className="inline-flex h-10 items-center rounded-md text-sm text-muted-foreground transition hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                     >
-                      {aboutLink.label}
+                      {link.label}
                     </a>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
-              ) : null}
+              ))}
 
               <DesktopDropdownMenu
                 activeDropdown={activeDropdown}
@@ -311,7 +316,7 @@ export function Navbar() {
           </NavigationMenu>
 
           <a
-            href="/#contact"
+            href="/contact"
             className="inline-flex font-NeueMachina min-h-10 items-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-accent-foreground transition hover:bg-accent/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             Get a Quote
@@ -368,7 +373,7 @@ export function Navbar() {
               </a>
             ))}
             <a
-              href="/#contact"
+              href="/contact"
               className="mt-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-accent-foreground"
               onClick={closeMenu}
             >

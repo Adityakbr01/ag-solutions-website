@@ -16,9 +16,11 @@ export const socialLinks = [
 ];
 
 export const navLinks = [
+  { label: "Home", href: "/" },
   { label: "About", href: "#about" },
   { label: "Products", href: "#products" },
   { label: "Portfolio", href: "#portfolio" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const serviceNavLinks = [
