@@ -22,10 +22,10 @@ export function SectionHeader({
       }
     >
       <div>
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-accent-strong dark:text-accent">
+        <p className="section-header-eyebrow mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-accent-strong dark:text-accent">
           {eyebrow}
         </p>
-        <h2 className="font-display text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl">
+        <h2 className="section-header-title font-display text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl">
           {titleLines.map((line) => (
             <span className="block" key={line}>
               {line}
@@ -34,7 +34,7 @@ export function SectionHeader({
         </h2>
       </div>
       {description ? (
-        <p className="max-w-xl text-base font-light leading-7 text-muted-foreground">
+        <p className="section-header-description max-w-xl text-base font-light leading-7 text-muted-foreground">
           {description}
         </p>
       ) : null}

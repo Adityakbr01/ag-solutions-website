@@ -1,2 +1,7 @@
-export { Navbar } from "@/components/layouts/Navbar";
-export { default } from "@/components/layouts/Navbar";
+import { Navbar as BaseNavbar } from "@/components/layouts/Navbar";
+
+export function Navbar() {
+  return <BaseNavbar />;
+}
+
+export default Navbar;

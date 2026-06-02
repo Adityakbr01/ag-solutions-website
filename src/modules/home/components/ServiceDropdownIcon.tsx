@@ -1,12 +1,27 @@
 import type { serviceNavLinks } from "../data/homeContent";
+import { HomeIcon, type HomeIconName } from "./HomeIcon";
 
 type ServiceDropdownIconName = (typeof serviceNavLinks)[number]["icon"];
+
+const serviceStrokeIcons: Partial<
+  Record<ServiceDropdownIconName, HomeIconName>
+> = {
+  custom: "sparkles",
+  email: "mail",
+  marketing: "trendingUp",
+};
 
 interface ServiceDropdownIconProps {
   name: ServiceDropdownIconName;
 }
 
 export function ServiceDropdownIcon({ name }: ServiceDropdownIconProps) {
+  const strokeIcon = serviceStrokeIcons[name];
+
+  if (strokeIcon) {
+    return <HomeIcon name={strokeIcon} className="h-8 w-8 shrink-0" />;
+  }
+
   if (name === "web") {
     return (
       <svg

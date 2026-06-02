@@ -6,7 +6,10 @@ import { SectionHeader } from "./SectionHeader";
 
 export function AboutSection() {
   return (
-    <section id="about" className="px-5 py-24 md:px-12">
+    <section
+      id="about"
+      className="bg-[#eef3df] px-5 py-24 text-[#142033] md:px-12 [&_.section-header-description]:text-[#4b5870] [&_.section-header-eyebrow]:text-[#2563eb] [&_.section-header-title]:text-[#142033]"
+    >
       <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-2 lg:items-center">
         <FadeIn>
           <SectionHeader
@@ -18,12 +21,12 @@ export function AboutSection() {
           <div className="grid gap-4 sm:grid-cols-2">
             {aboutFeatures.map((feature) => (
               <article
-                className="section-accent-card relative overflow-hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-white/[0.08] dark:bg-slate-900/75"
+                className="relative overflow-hidden rounded-lg border border-white/75 bg-white/75 p-5 shadow-[0_16px_42px_rgba(31,60,96,0.08)] backdrop-blur dark:border-white/[0.08] dark:bg-slate-900/75"
                 key={feature.title}
                 style={{ "--card-accent": feature.accent } as CSSProperties}
               >
                 <div className="relative z-10 flex items-start gap-4">
-                  <span className="section-accent-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50 dark:border-white/[0.08] dark:bg-slate-800">
+                  <span className="section-accent-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-full border shadow-none! border-slate-200 bg-slate-50 dark:border-white/[0.08] dark:bg-slate-800">
                     <HomeIcon name={feature.icon} className="h-5 w-5" />
                   </span>
                   <div className="min-w-0">
@@ -42,7 +45,7 @@ export function AboutSection() {
 
         <FadeIn
           delay={180}
-          className="relative overflow-hidden rounded-lg border border-slate-200 bg-white p-8 shadow-sm dark:border-white/[0.08] dark:bg-slate-900/80"
+          className="relative overflow-hidden rounded-lg border border-white/75 bg-white/80 p-8  dark:border-white/[0.08] dark:bg-slate-900/80"
         >
           <div
             className="absolute inset-0 bg-[radial-gradient(circle_at_86%_12%,color-mix(in_srgb,var(--secondary-accent)_18%,transparent),transparent_34%),radial-gradient(circle_at_8%_92%,color-mix(in_srgb,var(--accent)_16%,transparent),transparent_30%)]"

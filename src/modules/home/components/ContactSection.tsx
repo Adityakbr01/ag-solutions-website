@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { CSSProperties } from "react";
 import { Button } from "@/components/ui/button";
 import { contactInfo } from "../data/homeContent";
 import { FadeIn } from "./FadeIn";
@@ -37,11 +36,8 @@ export function ContactSection() {
   return (
     <FadeIn>
       <section id="contact" className="mb-6 px-5 md:px-12">
-        <div className="relative mx-auto grid max-w-7xl gap-10 overflow-hidden rounded-lg border border-slate-200 bg-white p-8 shadow-sm dark:border-white/[0.08] dark:bg-slate-900/80 md:grid-cols-2 md:p-14">
-          <div
-            className="absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,color-mix(in_srgb,var(--accent)_16%,transparent),transparent_30%),radial-gradient(circle_at_92%_82%,color-mix(in_srgb,var(--secondary-accent)_18%,transparent),transparent_32%)]"
-            aria-hidden="true"
-          />
+        <div className="relative mx-auto grid max-w-7xl gap-10 overflow-hidden rounded-lg border border-slate-200 bg-white p-8 shadow-none! dark:border-white/[0.08] dark:bg-slate-900/80 md:grid-cols-2 md:p-14">
+          <div className="absolute inset-" aria-hidden="true" />
           <div className="relative z-10">
             <h2 className="font-display text-4xl font-extrabold leading-[1.1] text-slate-950 dark:text-white">
               Ready to build
@@ -76,16 +72,11 @@ export function ContactSection() {
                     className={className}
                     href={method.href}
                     key={method.label}
-                    style={{ "--card-accent": method.accent } as CSSProperties}
                   >
                     {content}
                   </a>
                 ) : (
-                  <div
-                    className={className}
-                    key={method.label}
-                    style={{ "--card-accent": method.accent } as CSSProperties}
-                  >
+                  <div className={className} key={method.label}>
                     {content}
                   </div>
                 );
@@ -93,10 +84,7 @@ export function ContactSection() {
             </div>
           </div>
 
-          <div
-            className="section-accent-card relative z-10 overflow-hidden rounded-lg border border-slate-200 bg-slate-50/85 p-6 dark:border-white/[0.08] dark:bg-white/[0.05]"
-            style={{ "--card-accent": "#ff2d6f" } as CSSProperties}
-          >
+          <div className="section-accent-card relative z-10 overflow-hidden rounded-lg border border-slate-200 bg-slate-50/85 p-6 dark:border-white/[0.08] dark:bg-white/[0.05]">
             <h3 className="font-display text-xl font-bold text-slate-950 dark:text-white">
               Stay in the loop
             </h3>
@@ -133,6 +121,16 @@ export function ContactSection() {
                 ? "Thanks. You are on the list."
                 : "No spam, unsubscribe any time."}
             </p>
+            <img
+              src="/images/noSpam.webp"
+              alt=""
+              width={700}
+              height={600}
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              className="pointer-events-none absolute! -bottom-12 -right-8 z-0! w-[clamp(11rem,26vw,20rem)] select-none object-contain opacity-65 sm:-bottom-20 sm:right-4"
+            />
           </div>
         </div>
       </section>

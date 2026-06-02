@@ -15,7 +15,10 @@ const getServiceImageSrcSet = (src: string) => {
   ].some((name) => src.includes(name));
 
   if (isOptimized) {
-    const imageName = src.split("/").pop()?.replace(/\.(png|webp)$/, "");
+    const imageName = src
+      .split("/")
+      .pop()
+      ?.replace(/\.(png|webp)$/, "");
     return `/images/hero-optimized/${imageName}-192.webp 192w, /images/hero-optimized/${imageName}-384.webp 384w`;
   }
   return undefined;
@@ -41,12 +44,13 @@ export function ServicesSection() {
           <div className="grid items-stretch gap-5 [grid-auto-rows:minmax(0,1fr)] md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
               <article
-                className="service-showcase-card group relative flex h-full min-h-[390px] min-w-0 flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-white/[0.08] dark:bg-slate-900/80 sm:p-6"
+                id={service.id}
+                className="service-showcase-card shadow-none! group relative flex h-full min-h-[390px] min-w-0 scroll-mt-24 flex-col overflow-hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-white/[0.08] dark:bg-slate-900/80 sm:p-6"
                 key={service.title}
                 style={{ "--service-accent": service.accent } as CSSProperties}
               >
                 <div className="relative z-10 mb-7 flex min-h-16 items-start justify-between gap-4">
-                  <div className="service-showcase-icon flex h-14 w-14 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 dark:border-white/[0.08] dark:bg-slate-800">
+                  <div className="service-showcase-icon flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50 dark:border-white/[0.08] dark:bg-slate-800">
                     <HomeIcon name={service.icon} className="h-5 w-5" />
                   </div>
                   <img

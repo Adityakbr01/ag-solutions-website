@@ -22,9 +22,12 @@ const homeHref = (href: string) => (href.startsWith("#") ? `/${href}` : href);
 type DesktopDropdown = "services" | "products";
 
 const serviceDescriptions: Record<(typeof serviceNavLinks)[number]["href"], string> = {
-  "web_development.php": "Fast web apps, portals, and business platforms.",
-  "mobile_app.php": "iOS and Android apps shaped for real workflows.",
-  "desktop.php": "Reliable desktop software and legacy modernization.",
+  "/#web-development": "Fast websites, portals, dashboards, and business platforms.",
+  "/#mobile-app-development": "iOS, Android, and cross-platform apps shaped for real workflows.",
+  "/#desktop-applications": "Reliable desktop software, internal tools, and legacy modernization.",
+  "/#email-marketing": "Automated campaigns, templates, journeys, and audience reporting.",
+  "/#digital-marketing": "SEO, paid media, social campaigns, and conversion-focused funnels.",
+  "/#custom-software": "Bespoke automation, integrations, APIs, and dashboards.",
 };
 
 const productDescriptions: Record<(typeof productNavLinks)[number]["href"], string> = {
@@ -281,9 +284,9 @@ export function Navbar() {
                 onClose={closeDropdown}
                 onOpen={setActiveDropdown}
                 renderIcon={(icon) => <ServiceDropdownIcon name={icon} />}
-                summary="Choose the delivery lane for your next software build."
+                summary="Choose the service lane for your next digital growth project."
                 type="services"
-                widthClassName="w-[390px]"
+                widthClassName="w-[460px]"
               />
 
               <DesktopDropdownMenu

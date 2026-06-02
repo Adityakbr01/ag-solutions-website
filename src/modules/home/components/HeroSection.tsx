@@ -9,80 +9,44 @@ import "swiper/css";
 
 const heroBanners = [
   {
-    eyebrow: "Web Platforms",
-    title: "Launch faster with scalable web systems.",
-    description:
-      "High-performance websites, dashboards, and SaaS platforms built for real business workflows.",
-    image: "/images/apiImage.webp",
-    imageAlt: "Web platform development illustration",
-    metric: "10+ yrs",
-    metricLabel: "Delivery experience",
-    accent: "from-accent/20 via-gold-light/10 to-info/10",
+    label: "Digital Marketing",
+    image: "/images/digitalMArketingBanner.png",
+    imageAlt:
+      "Digital marketing banner showing campaigns, analytics, search, and social growth",
   },
   {
-    eyebrow: "Mobile Apps",
-    title: "Native-feeling apps for growing teams.",
-    description:
-      "iOS, Android, and cross-platform products designed around speed, usability, and long-term support.",
-    image: "/images/mobileDevelopemnt.webp",
-    imageAlt: "Mobile app development illustration",
-    metric: "200+",
-    metricLabel: "Satisfied clients",
-    accent: "from-info/15 via-accent/10 to-success/15",
+    label: "Web Platforms",
+    image: "/images/WebPlatformsBannerImage.png",
+    imageAlt:
+      "Web platforms banner showing scalable web systems and cloud dashboards",
   },
   {
-    eyebrow: "Custom Solutions",
-    title: "Software shaped around your operations.",
-    description:
-      "From automation to integrations, we design custom systems that remove friction from everyday work.",
-    image: "/images/customeSolution.webp",
-    imageAlt: "Custom software solution illustration",
-    metric: "95%",
-    metricLabel: "Client retention",
-    accent: "from-success/15 via-gold-light/10 to-accent/20",
+    label: "Mobile Apps",
+    image: "/images/mobileDevelopemntBanner.png",
+    imageAlt:
+      "Mobile apps banner showing native-feeling mobile products for growing teams",
   },
+
   {
-    eyebrow: "Digital Marketing",
-    title: "Campaigns that keep your pipeline moving.",
-    description:
-      "Search, social, and performance marketing built around clear reporting and stronger conversion paths.",
-    image: "/images/online-marketing-promotion-3d-cartoon.webp",
-    imageAlt: "Digital marketing promotion illustration",
-    metric: "50+",
-    metricLabel: "Expert professionals",
-    accent: "from-gold-light/20 via-accent/10 to-info/10",
-  },
-  {
-    eyebrow: "Desktop Apps",
-    title: "Reliable tools for everyday business work.",
-    description:
-      "Modern desktop applications, migrations, and internal tools with practical interfaces teams can use daily.",
-    image: "/images/sale.webp",
-    imageAlt: "Desktop application solution illustration",
-    metric: "24/7",
-    metricLabel: "Support mindset",
-    accent: "from-info/10 via-success/10 to-accent/20",
+    label: "Desktop Development",
+    image: "/images/desktopDevelopmentBanner.png",
+    imageAlt:
+      "Desktop development banner showing cross-platform applications and productivity tools",
   },
 ] as const;
 
-const heroImageSizes =
-  "(max-width: 639px) 8rem, (max-width: 767px) 20rem, (max-width: 1023px) 16rem, 18rem";
+const heroCarouselSlides = Array.from({ length: 3 }, () => heroBanners).flat();
+const middleSlideOffset = heroBanners.length;
 
-const getHeroWebpSrcSet = (image: string) => {
-  const imageName = image
-    .split("/")
-    .pop()
-    ?.replace(/\.(png|webp)$/, "");
-
-  return `/images/hero-optimized/${imageName}-192.webp 192w, /images/hero-optimized/${imageName}-384.webp 384w`;
-};
+const getOriginalBannerIndex = (index: number) =>
+  ((index % heroBanners.length) + heroBanners.length) % heroBanners.length;
 
 export const HeroSection = () => {
   const [activeHeroIndex, setActiveHeroIndex] = useState(0);
   const [heroSwiper, setHeroSwiper] = useState<SwiperInstance | null>(null);
 
   return (
-    <section className="relative flex flex-col items-center justify-start overflow-hidden pb-5 pt-3 sm:min-h-[86vh] sm:justify-center sm:pb-6 sm:pt-0">
+    <section className="relative flex flex-col items-center justify-start overflow-hidden pb-5 pt-8 sm:min-h-[86vh] w-full sm:justify-center sm:pb-6 sm:pt-2">
       <FadeIn eager className="mx-auto flex w-full flex-col items-center gap-2">
         <div className="flex w-full flex-col items-center justify-center text-center">
           <div className="relative w-full">
@@ -95,85 +59,70 @@ export const HeroSection = () => {
               }}
               centeredSlides
               grabCursor
+              initialSlide={middleSlideOffset}
               keyboard={{ enabled: true }}
-              loop
-              loopAddBlankSlides={false}
               slidesPerGroup={1}
               watchOverflow={false}
-              onSlideChange={(swiper) => setActiveHeroIndex(swiper.realIndex)}
-              onSwiper={setHeroSwiper}
+              onSlideChange={(swiper) =>
+                setActiveHeroIndex(getOriginalBannerIndex(swiper.activeIndex))
+              }
+              onSlideChangeTransitionEnd={(swiper) => {
+                if (
+                  swiper.activeIndex < middleSlideOffset ||
+                  swiper.activeIndex >= middleSlideOffset * 2
+                ) {
+                  swiper.slideTo(
+                    middleSlideOffset +
+                      getOriginalBannerIndex(swiper.activeIndex),
+                    0,
+                    false,
+                  );
+                }
+              }}
+              onSwiper={(swiper) => {
+                setHeroSwiper(swiper);
+                setActiveHeroIndex(getOriginalBannerIndex(swiper.activeIndex));
+              }}
               autoplay={{
-                delay: 4200,
+                delay: 3600,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
               }}
+              lazyPreloadPrevNext={2}
               slideToClickedSlide
               slidesPerView={1}
-              spaceBetween={8}
+              spaceBetween={12}
               speed={650}
               breakpoints={{
                 640: {
-                  slidesPerView: 1.02,
+                  slidesPerView: 1.08,
+                  spaceBetween: 14,
                 },
                 1024: {
-                  slidesPerView: 1.07,
+                  slidesPerView: 1.16,
+                  spaceBetween: 16,
                 },
                 1440: {
-                  slidesPerView: 1.13,
+                  slidesPerView: 1.24,
+                  spaceBetween: 18,
                 },
               }}
               className="hero-banner-swiper"
             >
-              {heroBanners.map((banner, index) => (
-                <SwiperSlide key={`${banner.title}-${index}`}>
-                  <article className="hero-banner-card relative grid w-full overflow-hidden rounded-lg border border-border bg-card dark:border-white/[0.08] dark:bg-[#0c0c0b] md:grid-cols-[1.05fr_0.95fr]">
-                    <div
-                      className={`absolute inset-0 bg-linear-to-br ${banner.accent}`}
-                      aria-hidden="true"
+              {heroCarouselSlides.map((banner, index) => (
+                <SwiperSlide key={`${banner.label}-${index}`}>
+                  <article className="hero-banner-card relative w-full overflow-hidden rounded-lg border border-border bg-card shadow-[0_20px_60px_rgba(15,23,42,0.12)] dark:border-white/[0.08] dark:bg-[#0c0c0b]">
+                    <img
+                      src={banner.image}
+                      alt={banner.imageAlt}
+                      width="1536"
+                      height="864"
+                      loading={index < heroBanners.length ? "eager" : "lazy"}
+                      decoding="async"
+                      fetchPriority={index === 0 ? "high" : "auto"}
+                      sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1439px) 76vw, 62vw"
+                      className="h-full w-full object-cover"
                     />
-                    <div
-                      className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,color-mix(in_srgb,var(--accent)_18%,transparent),transparent_32%),linear-gradient(90deg,color-mix(in_srgb,var(--background)_78%,transparent),transparent_72%)]"
-                      aria-hidden="true"
-                    />
-                    <div className="relative z-10 flex min-w-0 flex-col items-start justify-center px-4 py-5 text-left sm:px-8 sm:py-7 md:px-10 lg:px-12">
-                      <span className="inline-flex rounded-full border border-accent/30 bg-background/65 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-accent-strong backdrop-blur dark:bg-white/[0.04] dark:text-accent">
-                        {banner.eyebrow}
-                      </span>
-                      <strong className="mt-3 max-w-2xl font-display text-2xl font-extrabold leading-[1.08] text-foreground sm:mt-4 sm:text-4xl sm:leading-[1.05] lg:text-5xl">
-                        {banner.title}
-                      </strong>
-                      <span className="mt-3 max-w-[17rem] text-xs leading-5 text-muted-foreground sm:mt-4 sm:max-w-xl sm:text-base sm:leading-6">
-                        {banner.description}
-                      </span>
-                      <div className="mt-5 flex items-center gap-3 rounded-lg border border-border bg-background/75 px-3.5 py-2.5 shadow-sm backdrop-blur sm:mt-6 sm:px-4 sm:py-3 dark:border-white/[0.08] dark:bg-black/25">
-                        <span className="font-display text-2xl font-extrabold text-accent-strong sm:text-3xl dark:text-accent">
-                          {banner.metric}
-                        </span>
-                        <span className="max-w-28 text-left font-mono text-[10px] font-bold uppercase leading-4 tracking-wider text-muted-foreground">
-                          {banner.metricLabel}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="pointer-events-none absolute bottom-12 right-1 z-10 flex h-28 w-36 items-end justify-end opacity-45 sm:bottom-2 sm:right-2 sm:h-44 sm:w-56 sm:opacity-90 md:relative md:bottom-auto md:right-auto md:h-auto md:w-auto md:min-h-56 md:items-center md:justify-center md:p-8 md:opacity-100 lg:p-10">
-                      <picture className="contents">
-                        <source
-                          srcSet={getHeroWebpSrcSet(banner.image)}
-                          sizes={heroImageSizes}
-                          type="image/webp"
-                        />
-                        <img
-                          src={banner.image}
-                          alt={banner.imageAlt}
-                          width="360"
-                          height="360"
-                          loading={index === 0 ? "eager" : "lazy"}
-                          decoding="async"
-                          fetchPriority={index === 0 ? "high" : "auto"}
-                          sizes={heroImageSizes}
-                          className="h-28 w-full max-w-[8rem] object-contain drop-shadow-2xl sm:h-40 sm:max-w-xs md:h-64 lg:h-72"
-                        />
-                      </picture>
-                    </div>
                   </article>
                 </SwiperSlide>
               ))}
@@ -186,39 +135,16 @@ export const HeroSection = () => {
               {heroBanners.map((banner, index) => (
                 <button
                   aria-current={activeHeroIndex === index ? "true" : undefined}
-                  aria-label={`Show ${banner.eyebrow} banner`}
+                  aria-label={`Show ${banner.label} banner`}
                   className={`hero-banner-dot ${
                     activeHeroIndex === index ? "is-active" : ""
                   }`}
-                  key={banner.title}
-                  onClick={() => heroSwiper?.slideToLoop(index)}
+                  key={banner.label}
+                  onClick={() => heroSwiper?.slideTo(middleSlideOffset + index)}
                   type="button"
                 />
               ))}
             </div>
-          </div>
-
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 px-4 font-mono text-[10px] tracking-wider text-muted-foreground/60 sm:mt-5 sm:gap-x-6 sm:px-6 md:px-12">
-            <span className="flex items-center gap-1.5">
-              <span className="font-bold text-accent-strong dark:text-accent">
-                //
-              </span>
-              WEB PLATFORMS
-            </span>
-            <span className="hidden text-foreground/20 sm:inline">|</span>
-            <span className="flex items-center gap-1.5">
-              <span className="font-bold text-accent-strong dark:text-accent">
-                //
-              </span>
-              MOBILE APPS
-            </span>
-            <span className="hidden text-foreground/20 sm:inline">|</span>
-            <span className="flex items-center gap-1.5">
-              <span className="font-bold text-accent-strong dark:text-accent">
-                //
-              </span>
-              CLOUD SYSTEMS
-            </span>
           </div>
 
           <div className="mt-5 flex w-full flex-col items-center justify-center gap-3 px-4 sm:mt-7 sm:flex-row sm:gap-4 sm:px-6 md:px-12">

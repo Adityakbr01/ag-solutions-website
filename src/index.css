@@ -62,7 +62,7 @@
 
 /* ─── Light mode: warm cream & gold ──────────────────────────────────────── */
 :root {
-  --background: hsl(210 40% 98%);
+  --background: hsl(0, 0%, 96%);
   --foreground: hsl(222 47% 11%);
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(222 47% 11%);
@@ -253,8 +253,10 @@ html.lenis body {
   position: relative;
   display: block;
   width: 100%;
+  max-width: none;
+  margin-inline: auto;
   overflow: visible;
-  padding: 0.25rem 0 2.25rem;
+  padding: 0.25rem 0 2rem;
   touch-action: pan-y;
   z-index: 1;
 }
@@ -302,19 +304,9 @@ html.lenis body {
 }
 
 .hero-banner-card {
-  height: 22.25rem;
-}
-
-@media (min-width: 640px) {
-  .hero-banner-card {
-    height: 33.5rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .hero-banner-card {
-    height: 28.5rem;
-  }
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-height: 34rem;
 }
 
 .hero-banner-dots {
@@ -388,21 +380,8 @@ html.lenis body {
     transform 260ms ease;
 }
 
-.service-card::before {
-  z-index: 0;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--service-accent, var(--accent)) 16%, transparent),
-    transparent 38%
-  );
-}
-
 .service-card::after {
   z-index: 0;
-  box-shadow:
-    inset 0 0 0 1px
-      color-mix(in srgb, var(--service-accent, var(--accent)) 24%, transparent),
-    inset 0 1px 0 color-mix(in srgb, white 45%, transparent);
 }
 
 .service-card:is(:hover, :focus-within)::before,
@@ -439,23 +418,12 @@ html.lenis body {
   transition: opacity 260ms ease;
 }
 
-.service-showcase-card:hover {
-  border-color: color-mix(in srgb, var(--service-accent) 44%, transparent);
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
-    0 24px 50px color-mix(in srgb, var(--service-accent) 13%, transparent);
-  transform: translateY(-4px);
-}
-
 .service-showcase-card:hover::before {
   opacity: 1;
 }
 
 .service-showcase-icon {
   color: var(--service-accent);
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, white 30%, transparent),
-    0 12px 28px color-mix(in srgb, var(--service-accent) 12%, transparent);
 }
 
 .service-feature-check {
@@ -474,10 +442,7 @@ html.lenis body {
   ) !important;
 }
 
-.section-accent-card {
-  --card-accent: var(--accent);
-  isolation: isolate;
-}
+
 
 .section-accent-card::before {
   position: absolute;
@@ -496,7 +461,6 @@ html.lenis body {
       color-mix(in srgb, var(--card-accent) 9%, transparent),
       transparent 46%
     );
-  opacity: 0.78;
   transition: opacity 260ms ease;
 }
 
@@ -505,15 +469,12 @@ html.lenis body {
   z-index: 1;
 }
 
-.section-accent-card:hover {
-  border-color: color-mix(in srgb, var(--card-accent) 42%, transparent);
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, white 26%, transparent),
-    0 18px 38px color-mix(in srgb, var(--card-accent) 12%, transparent);
-}
-
 .section-accent-card:hover::before {
   opacity: 1;
+}
+
+.section-accent-card.no-card-accent-bg::before {
+  display: none;
 }
 
 .section-accent-icon {
@@ -547,131 +508,6 @@ html.lenis body {
   --cta-foreground: hsl(222 47% 8%);
 }
 
-/* ─── Primary CTA: gold fill button ──────────────────────────────────────── */
-.project-cover-flow {
-  touch-action: pan-y;
-}
-
-.project-cover-flow-stage {
-  perspective: clamp(900px, 72vw, 1500px);
-  perspective-origin: 50% 42%;
-  transform-style: preserve-3d;
-}
-
-.project-cover-flow-card {
-  backface-visibility: hidden;
-  transform-origin: center center;
-  transform-style: preserve-3d;
-}
-
-.project-cover-flow-card::after {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  content: "";
-  pointer-events: none;
-  border-radius: inherit;
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, white 56%, transparent),
-    inset 0 -1px 0 color-mix(in srgb, black 12%, transparent);
-}
-
-.project-cover-flow-card-inner {
-  animation: project-cover-float 7s ease-in-out infinite;
-  animation-delay: var(--float-delay, 0s);
-  transform: translate3d(0, 0, 0);
-  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
-}
-
-.project-cover-flow-card:hover .project-cover-flow-card-inner,
-.project-cover-flow-card-active .project-cover-flow-card-inner {
-  transform: translate3d(0, -8px, 24px);
-}
-
-.reference-cover-flow {
-  touch-action: pan-y;
-}
-
-.reference-cover-flow-stage {
-  perspective: clamp(760px, 58vw, 1180px);
-  perspective-origin: 50% 48%;
-  transform-style: preserve-3d;
-}
-
-.reference-cover-card {
-  backface-visibility: hidden;
-  transform-origin: center center;
-  transform-style: preserve-3d;
-}
-
-.reference-cover-card::before,
-.reference-cover-card::after {
-  position: absolute;
-  inset: 0;
-  z-index: 20;
-  content: "";
-  pointer-events: none;
-  border-radius: inherit;
-}
-
-.reference-cover-card::before {
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, white 32%, transparent),
-      transparent 24%,
-      transparent 74%,
-      color-mix(in srgb, black 14%, transparent)
-    ),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, white 18%, transparent),
-      transparent 42%,
-      color-mix(in srgb, black 12%, transparent)
-    );
-}
-
-.dark .reference-cover-card::before {
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in srgb, white 14%, transparent),
-      transparent 24%,
-      transparent 74%,
-      color-mix(in srgb, black 28%, transparent)
-    ),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, white 10%, transparent),
-      transparent 42%,
-      color-mix(in srgb, black 26%, transparent)
-    );
-}
-
-.reference-cover-card::after {
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, white 72%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, black 7%, transparent);
-}
-
-.dark .reference-cover-card::after {
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, white 18%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, white 8%, transparent);
-}
-
-.reference-cover-image {
-  animation: reference-cover-float 6.8s ease-in-out infinite;
-  animation-delay: var(--float-delay, 0s);
-  transform: translate3d(0, 0, 18px);
-  will-change: transform;
-}
-
-.reference-cover-card:hover .reference-cover-image {
-  transform: translate3d(0, -5px, 34px) scale(1.04);
-}
-
 .footer-embossed-word {
   position: absolute;
   left: 50%;
@@ -700,7 +536,6 @@ html.lenis body {
 .dark .footer-embossed-word {
   color: color-mix(in srgb, white 6%, transparent);
   opacity: 0.78;
-  
 }
 
 @keyframes reference-cover-float {

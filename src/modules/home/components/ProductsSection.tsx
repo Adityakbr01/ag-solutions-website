@@ -11,7 +11,7 @@ export function ProductsSection() {
   return (
     <section
       id="products"
-      className="bg-gradient-to-b from-slate-50 via-white to-slate-50 px-5 py-24 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 md:px-12"
+      className="bg-[#f3e7db] px-5 py-24 text-[#172033] md:px-12 [&_.section-header-eyebrow]:text-[#9a4f14] [&_.section-header-title]:text-[#172033]"
     >
       <div className="mx-auto max-w-7xl">
         <FadeIn>
@@ -24,8 +24,8 @@ export function ProductsSection() {
         <div className="grid gap-6 lg:grid-cols-2">
           <FadeIn className="lg:col-span-2">
             <article
-              className="section-accent-card relative grid overflow-hidden rounded-lg border border-slate-200 bg-white p-8 shadow-sm dark:border-white/[0.08] dark:bg-slate-900/80 md:grid-cols-[1.1fr_0.9fr] md:p-10"
-              style={{ "--card-accent": "#38bdf8" } as CSSProperties}
+              className="section-accent-card no-card-accent-bg relative grid overflow-hidden rounded-lg border border-white/75 bg-white/82 p-8 shadow-[0_18px_52px_rgba(41,55,89,0.1)] backdrop-blur dark:border-white/[0.08] dark:bg-slate-900/80 md:grid-cols-[1.1fr_0.9fr] md:p-10"
+              style={{ "--card-accent": "#2563eb" } as CSSProperties}
             >
               <div className="relative z-10">
                 <span className="section-accent-badge inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em]">
@@ -36,8 +36,8 @@ export function ProductsSection() {
                 </h3>
                 <p className="mt-4 text-sm font-light leading-7 text-slate-600 dark:text-slate-300 md:text-base">
                   EDMS helps export businesses manage all documentation,
-                  reporting, monthly returns, <br/> and scheme claims in one organized
-                  platform, saving time and money across the export <br/> lifecycle.
+                  reporting, monthly returns, and scheme claims in one organized
+                  platform, saving time and money across the export lifecycle.
                 </p>
                 <div className="mt-7 space-y-3">
                   {productFeatures.map((feature) => (
@@ -76,7 +76,7 @@ export function ProductsSection() {
           {products.map((product, index) => (
             <FadeIn delay={120 + index * 120} key={product.title}>
               <article
-                className="section-accent-card relative h-full overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 dark:border-white/[0.08] dark:bg-slate-900/80"
+                className="section-accent-card no-card-accent-bg relative h-full overflow-hidden rounded-lg bg-white/82 p-6 shadow-none! transition hover:-translate-y-1 dark:border-white/[0.08] dark:bg-slate-900/80"
                 style={{ "--card-accent": product.accent } as CSSProperties}
               >
                 <div className="relative z-10">
@@ -84,7 +84,7 @@ export function ProductsSection() {
                     <span className="section-accent-badge inline-flex rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em]">
                       {product.badge}
                     </span>
-                    <span className="section-accent-icon flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 dark:border-white/[0.08] dark:bg-slate-800">
+                    <span className="section-accent-icon flex h-12 w-12 shrink-0 items-center justify-center rounded-lg shadow-none! dark:border-white/[0.08] dark:bg-slate-800">
                       <HomeIcon name={product.icon} className="h-5 w-5" />
                     </span>
                   </div>

@@ -26,18 +26,33 @@ export const navLinks = [
 export const serviceNavLinks = [
   {
     label: "Web Development",
-    href: "web_development.php",
+    href: "/#web-development",
     icon: "web",
   },
   {
-    label: "Mobile app Development",
-    href: "mobile_app.php",
+    label: "Mobile App Development",
+    href: "/#mobile-app-development",
     icon: "mobile",
   },
   {
     label: "Desktop Applications",
-    href: "desktop.php",
+    href: "/#desktop-applications",
     icon: "desktop",
+  },
+  {
+    label: "Email Marketing",
+    href: "/#email-marketing",
+    icon: "email",
+  },
+  {
+    label: "Digital Marketing",
+    href: "/#digital-marketing",
+    icon: "marketing",
+  },
+  {
+    label: "Custom Software",
+    href: "/#custom-software",
+    icon: "custom",
   },
 ] as const;
 
@@ -103,6 +118,7 @@ export const stats: Array<{
 ];
 
 export const services: Array<{
+  id: string;
   title: string;
   description: string;
   icon: HomeIconName;
@@ -117,6 +133,7 @@ export const services: Array<{
   highlighted?: boolean;
 }> = [
   {
+    id: "web-development",
     title: "Web Development",
     description:
       "End-to-end web solutions combining the latest technologies with robust project management, from landing pages to complex enterprise platforms.",
@@ -135,6 +152,7 @@ export const services: Array<{
     href: "#contact",
   },
   {
+    id: "mobile-app-development",
     title: "Mobile App Development",
     description:
       "Enterprise mobility solutions for iOS and Android, from strategy and design through development, testing, and deployment.",
@@ -153,6 +171,7 @@ export const services: Array<{
     href: "#contact",
   },
   {
+    id: "desktop-applications",
     title: "Desktop Applications",
     description:
       "Legacy migrations or greenfield builds with lower risk, clear timelines, and practical cross-platform desktop expertise.",
@@ -171,6 +190,7 @@ export const services: Array<{
     href: "#contact",
   },
   {
+    id: "email-marketing",
     title: "Email Marketing",
     description:
       "Tailored campaigns for each audience segment that engage new customers and nurture existing relationships with measurable ROI.",
@@ -189,6 +209,7 @@ export const services: Array<{
     href: "#contact",
   },
   {
+    id: "digital-marketing",
     title: "Digital Marketing",
     description:
       "PPC, SEO, and SMM strategies that give your brand first-page visibility and stronger reach across search and social channels.",
@@ -207,6 +228,7 @@ export const services: Array<{
     href: "#contact",
   },
   {
+    id: "custom-software",
     title: "Custom Software Solutions",
     description:
       "Have a unique challenge? We build bespoke software that solves problems no off-the-shelf product can handle.",
@@ -235,7 +257,8 @@ export const aboutFeatures: Array<{
 }> = [
   {
     title: "Reliable",
-    description: "Commitments kept, deadlines met, and delivery handled with care.",
+    description:
+      "Commitments kept, deadlines met, and delivery handled with care.",
     icon: "check",
     accent: "#22c55e",
   },
@@ -476,6 +499,7 @@ export const footerColumns = [
       "Desktop Apps",
       "Email Marketing",
       "Digital Marketing",
+      "Custom Software",
     ],
   },
   {
