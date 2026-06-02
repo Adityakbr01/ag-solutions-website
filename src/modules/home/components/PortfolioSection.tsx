@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { portfolioItems } from "../data/homeContent";
 import { FadeIn } from "./FadeIn";
 import { HomeButtonLink } from "./HomeButtonLink";
@@ -6,7 +7,10 @@ import { SectionHeader } from "./SectionHeader";
 
 export function PortfolioSection() {
   return (
-    <section id="portfolio" className="px-5 py-24 md:px-12">
+    <section
+      id="portfolio"
+      className="bg-white px-5 py-24 dark:bg-slate-950 md:px-12"
+    >
       <div className="mx-auto max-w-7xl">
         <FadeIn>
           <SectionHeader
@@ -21,20 +25,27 @@ export function PortfolioSection() {
           <div className="grid gap-5 md:grid-cols-3">
             {portfolioItems.map((item) => (
               <article
-                className="overflow-hidden rounded-lg border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:border-accent/40 dark:border-white/[0.08] dark:bg-[#131312] dark:hover:border-accent/20"
+                className="section-accent-card relative overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 dark:border-white/[0.08] dark:bg-slate-900/80"
                 key={item.title}
+                style={{ "--card-accent": item.accent } as CSSProperties}
               >
-                <div className="flex aspect-[16/10] items-center justify-center bg-accent/10 text-accent-strong dark:bg-[#1a1a18] dark:text-accent">
-                  <HomeIcon name={item.icon} className="h-12 w-12" />
+                <div className="relative z-10 flex aspect-[16/10] items-center justify-center overflow-hidden bg-slate-50 dark:bg-slate-800/70">
+                  <div
+                    className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,color-mix(in_srgb,var(--card-accent)_28%,transparent),transparent_42%)]"
+                    aria-hidden="true"
+                  />
+                  <span className="section-accent-icon relative flex h-20 w-20 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-white/[0.08] dark:bg-slate-900">
+                    <HomeIcon name={item.icon} className="h-9 w-9" />
+                  </span>
                 </div>
-                <div className="p-6">
-                  <h3 className="font-display text-base font-bold text-card-foreground">
+                <div className="relative z-10 p-6">
+                  <h3 className="font-display text-base font-bold text-slate-950 dark:text-white">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
                     {item.description}
                   </p>
-                  <span className="mt-4 inline-flex rounded-full border border-info/20 bg-info/10 px-3 py-1 text-xs text-info">
+                  <span className="section-accent-badge mt-4 inline-flex rounded-full border px-3 py-1 text-xs font-medium">
                     {item.tag}
                   </span>
                 </div>

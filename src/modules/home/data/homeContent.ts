@@ -65,11 +65,41 @@ export const heroTechRows = [
   { name: "Node / PHP", scope: "Backend", tone: "green" },
 ];
 
-export const stats = [
-  { value: "10", suffix: "+", label: "Years of Service" },
-  { value: "200", suffix: "+", label: "Satisfied Clients" },
-  { value: "95", suffix: "%", label: "Client Retention Rate" },
-  { value: "50", suffix: "+", label: "Expert Professionals" },
+export const stats: Array<{
+  value: string;
+  suffix: string;
+  label: string;
+  icon: HomeIconName;
+  accent: string;
+}> = [
+  {
+    value: "10",
+    suffix: "+",
+    label: "Years of Service",
+    icon: "clock",
+    accent: "#38bdf8",
+  },
+  {
+    value: "200",
+    suffix: "+",
+    label: "Satisfied Clients",
+    icon: "users",
+    accent: "#22c55e",
+  },
+  {
+    value: "95",
+    suffix: "%",
+    label: "Client Retention Rate",
+    icon: "check",
+    accent: "#f97316",
+  },
+  {
+    value: "50",
+    suffix: "+",
+    label: "Expert Professionals",
+    icon: "sparkles",
+    accent: "#ff2d6f",
+  },
 ];
 
 export const services: Array<{
@@ -197,22 +227,35 @@ export const services: Array<{
   },
 ];
 
-export const aboutFeatures = [
+export const aboutFeatures: Array<{
+  title: string;
+  description: string;
+  icon: HomeIconName;
+  accent: string;
+}> = [
   {
     title: "Reliable",
     description: "Commitments kept, deadlines met, and delivery handled with care.",
+    icon: "check",
+    accent: "#22c55e",
   },
   {
     title: "Always Available",
     description: "Support that is close by when your team needs it most.",
+    icon: "clock",
+    accent: "#38bdf8",
   },
   {
     title: "Creative UI",
     description: "Unique, memorable interfaces designed for real users.",
+    icon: "sparkles",
+    accent: "#ff2d6f",
   },
   {
     title: "Proven Track Record",
     description: "Hundreds of successful deliveries across industries.",
+    icon: "chart",
+    accent: "#f97316",
   },
 ];
 
@@ -302,18 +345,28 @@ export const productFeatures = [
   "Cloud-based, accessible anywhere",
 ];
 
-export const products = [
+export const products: Array<{
+  badge: string;
+  title: string;
+  description: string;
+  icon: HomeIconName;
+  accent: string;
+}> = [
   {
     badge: "Marketing",
     title: "EASE Marketing Platform",
     description:
       "A digital marketing suite designed to streamline PPC campaigns, SEO tracking, and audience analytics in one place.",
+    icon: "trendingUp",
+    accent: "#ff2d6f",
   },
   {
     badge: "Community",
     title: "Grow Together",
     description:
       "A collaborative group meeting and networking platform that connects professionals and businesses to grow together.",
+    icon: "users",
+    accent: "#22c55e",
   },
 ];
 
@@ -322,6 +375,7 @@ export const portfolioItems: Array<{
   description: string;
   tag: string;
   icon: HomeIconName;
+  accent: string;
 }> = [
   {
     title: "E-Commerce Platform",
@@ -329,6 +383,7 @@ export const portfolioItems: Array<{
       "Full-stack storefront with inventory management and payment gateway integration.",
     tag: "Web Development",
     icon: "shoppingCart",
+    accent: "#38bdf8",
   },
   {
     title: "Grow Together App",
@@ -336,6 +391,7 @@ export const portfolioItems: Array<{
       "Community networking mobile app for Android and iOS with real-time messaging.",
     tag: "Mobile App",
     icon: "users",
+    accent: "#22c55e",
   },
   {
     title: "Export Management System",
@@ -343,6 +399,7 @@ export const portfolioItems: Array<{
       "End-to-end web application for export documentation and compliance.",
     tag: "Web Application",
     icon: "chart",
+    accent: "#f97316",
   },
 ];
 

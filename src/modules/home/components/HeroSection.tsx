@@ -69,7 +69,10 @@ const heroImageSizes =
   "(max-width: 639px) 8rem, (max-width: 767px) 20rem, (max-width: 1023px) 16rem, 18rem";
 
 const getHeroWebpSrcSet = (image: string) => {
-  const imageName = image.split("/").pop()?.replace(/\.(png|webp)$/, "");
+  const imageName = image
+    .split("/")
+    .pop()
+    ?.replace(/\.(png|webp)$/, "");
 
   return `/images/hero-optimized/${imageName}-192.webp 192w, /images/hero-optimized/${imageName}-384.webp 384w`;
 };

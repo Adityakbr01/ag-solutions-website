@@ -412,13 +412,6 @@ html.lenis body {
 
 .service-showcase-card {
   isolation: isolate;
-  background: linear-gradient(
-    180deg,
-    hsl(219 36% 12%) 0%,
-    hsl(221 39% 10%) 100%
-  );
-  border-color: color-mix(in srgb, hsl(217 76% 72%) 18%, transparent);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, white 4%, transparent);
   transition:
     border-color 260ms ease,
     box-shadow 260ms ease,
@@ -447,10 +440,10 @@ html.lenis body {
 }
 
 .service-showcase-card:hover {
-  /* border-color: color-mix(in srgb, var(--service-accent) 44%, transparent); */
+  border-color: color-mix(in srgb, var(--service-accent) 44%, transparent);
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, white 7%, transparent),
-    0 24px 50px color-mix(in srgb, hsl(222 47% 6%) 48%, transparent);
+    inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
+    0 24px 50px color-mix(in srgb, var(--service-accent) 13%, transparent);
   transform: translateY(-4px);
 }
 
@@ -460,11 +453,9 @@ html.lenis body {
 
 .service-showcase-icon {
   color: var(--service-accent);
-  background: hsl(218 23% 18%);
-  border-color: color-mix(in srgb, white 10%, transparent);
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, white 5%, transparent),
-    0 12px 28px color-mix(in srgb, hsl(222 47% 6%) 22%, transparent);
+    inset 0 1px 0 color-mix(in srgb, white 30%, transparent),
+    0 12px 28px color-mix(in srgb, var(--service-accent) 12%, transparent);
 }
 
 .service-feature-check {
@@ -481,6 +472,79 @@ html.lenis body {
     var(--service-accent) 64%,
     transparent
   ) !important;
+}
+
+.section-accent-card {
+  --card-accent: var(--accent);
+  isolation: isolate;
+}
+
+.section-accent-card::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    radial-gradient(
+      58% 54% at 88% 10%,
+      color-mix(in srgb, var(--card-accent) 16%, transparent),
+      transparent 64%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card-accent) 9%, transparent),
+      transparent 46%
+    );
+  opacity: 0.78;
+  transition: opacity 260ms ease;
+}
+
+.section-accent-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.section-accent-card:hover {
+  border-color: color-mix(in srgb, var(--card-accent) 42%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 26%, transparent),
+    0 18px 38px color-mix(in srgb, var(--card-accent) 12%, transparent);
+}
+
+.section-accent-card:hover::before {
+  opacity: 1;
+}
+
+.section-accent-icon {
+  color: var(--card-accent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 30%, transparent),
+    0 12px 26px color-mix(in srgb, var(--card-accent) 12%, transparent);
+}
+
+.section-accent-text {
+  color: var(--card-accent);
+}
+
+.section-accent-badge {
+  color: color-mix(in srgb, var(--card-accent) 78%, black 22%);
+  border-color: color-mix(in srgb, var(--card-accent) 30%, transparent);
+  background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+}
+
+.dark .section-accent-badge {
+  color: color-mix(in srgb, var(--card-accent) 82%, white 18%);
+}
+
+.section-accent-check {
+  color: var(--card-accent);
+  background: color-mix(in srgb, var(--card-accent) 15%, transparent);
+}
+
+.section-accent-card .home-wave-cta {
+  --cta-accent: var(--card-accent);
+  --cta-foreground: hsl(222 47% 8%);
 }
 
 /* ─── Primary CTA: gold fill button ──────────────────────────────────────── */
@@ -590,6 +654,8 @@ html.lenis body {
   .service-showcase-card,
   .service-showcase-card::before,
   .service-showcase-card img,
+  .section-accent-card,
+  .section-accent-card::before,
   .home-primary-cta::before,
   .home-wave-cta::before,
   .service-card::before,
