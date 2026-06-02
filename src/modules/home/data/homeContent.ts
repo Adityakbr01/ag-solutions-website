@@ -376,6 +376,10 @@ export const portfolioItems: Array<{
   tag: string;
   icon: HomeIconName;
   accent: string;
+  image: {
+    alt: string;
+    src: string;
+  };
 }> = [
   {
     title: "E-Commerce Platform",
@@ -384,6 +388,10 @@ export const portfolioItems: Array<{
     tag: "Web Development",
     icon: "shoppingCart",
     accent: "#38bdf8",
+    image: {
+      alt: "Web development project preview",
+      src: "/images/apiImage.webp",
+    },
   },
   {
     title: "Grow Together App",
@@ -392,6 +400,10 @@ export const portfolioItems: Array<{
     tag: "Mobile App",
     icon: "users",
     accent: "#22c55e",
+    image: {
+      alt: "Mobile app project preview",
+      src: "/images/mobileDevelopemnt.webp",
+    },
   },
   {
     title: "Export Management System",
@@ -400,6 +412,58 @@ export const portfolioItems: Array<{
     tag: "Web Application",
     icon: "chart",
     accent: "#f97316",
+    image: {
+      alt: "Export management project preview",
+      src: "/images/sale.webp",
+    },
+  },
+  {
+    title: "Marketing Campaign Suite",
+    description:
+      "Campaign planning and reporting workspace for search, social, and email growth teams.",
+    tag: "Digital Marketing",
+    icon: "trendingUp",
+    accent: "#ff2d6f",
+    image: {
+      alt: "Digital marketing project preview",
+      src: "/images/online-marketing-promotion-3d-cartoon.webp",
+    },
+  },
+  {
+    title: "Custom Automation Dashboard",
+    description:
+      "Internal automation dashboard connecting operations, APIs, reports, and daily workflows.",
+    tag: "Custom Software",
+    icon: "sparkles",
+    accent: "#8b5cf6",
+    image: {
+      alt: "Custom software project preview",
+      src: "/images/customeSolution.webp",
+    },
+  },
+  {
+    title: "Email Automation Journeys",
+    description:
+      "Lifecycle campaigns, automated sequences, and reporting templates for stronger customer retention.",
+    tag: "Email Marketing",
+    icon: "mail",
+    accent: "#f59e0b",
+    image: {
+      alt: "Email automation project preview",
+      src: "/images/email-marketing-campaign-announcement.webp",
+    },
+  },
+  {
+    title: "API Integration Hub",
+    description:
+      "Connected API workflows that move data cleanly between dashboards, teams, and business tools.",
+    tag: "Integrations",
+    icon: "globe",
+    accent: "#06b6d4",
+    image: {
+      alt: "API integration project preview",
+      src: "/images/apiImage.webp",
+    },
   },
 ];
 

@@ -3,8 +3,11 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border bg-background px-5 py-14 text-muted-foreground transition-colors duration-300 dark:border-white/[0.08] dark:bg-[#0a0a0a] md:px-12">
-      <div className="mx-auto max-w-7xl">
+    <footer className="relative overflow-hidden border-t border-border bg-background px-5 pb-32 pt-14 text-muted-foreground transition-colors duration-300 dark:border-white/[0.08] dark:bg-[#0a0a0a] sm:pb-40 md:px-12 md:pb-48">
+      <div className="footer-embossed-word uppercase" aria-hidden="true">
+        AG Solutions
+      </div>
+      <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
           <div>
             <a

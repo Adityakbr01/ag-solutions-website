@@ -548,6 +548,181 @@ html.lenis body {
 }
 
 /* ─── Primary CTA: gold fill button ──────────────────────────────────────── */
+.project-cover-flow {
+  touch-action: pan-y;
+}
+
+.project-cover-flow-stage {
+  perspective: clamp(900px, 72vw, 1500px);
+  perspective-origin: 50% 42%;
+  transform-style: preserve-3d;
+}
+
+.project-cover-flow-card {
+  backface-visibility: hidden;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+}
+
+.project-cover-flow-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 56%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, black 12%, transparent);
+}
+
+.project-cover-flow-card-inner {
+  animation: project-cover-float 7s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+  transform: translate3d(0, 0, 0);
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.project-cover-flow-card:hover .project-cover-flow-card-inner,
+.project-cover-flow-card-active .project-cover-flow-card-inner {
+  transform: translate3d(0, -8px, 24px);
+}
+
+.reference-cover-flow {
+  touch-action: pan-y;
+}
+
+.reference-cover-flow-stage {
+  perspective: clamp(760px, 58vw, 1180px);
+  perspective-origin: 50% 48%;
+  transform-style: preserve-3d;
+}
+
+.reference-cover-card {
+  backface-visibility: hidden;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+}
+
+.reference-cover-card::before,
+.reference-cover-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  content: "";
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.reference-cover-card::before {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, white 32%, transparent),
+      transparent 24%,
+      transparent 74%,
+      color-mix(in srgb, black 14%, transparent)
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, white 18%, transparent),
+      transparent 42%,
+      color-mix(in srgb, black 12%, transparent)
+    );
+}
+
+.dark .reference-cover-card::before {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, white 14%, transparent),
+      transparent 24%,
+      transparent 74%,
+      color-mix(in srgb, black 28%, transparent)
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, white 10%, transparent),
+      transparent 42%,
+      color-mix(in srgb, black 26%, transparent)
+    );
+}
+
+.reference-cover-card::after {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 72%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, black 7%, transparent);
+}
+
+.dark .reference-cover-card::after {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 18%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, white 8%, transparent);
+}
+
+.reference-cover-image {
+  animation: reference-cover-float 6.8s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+  transform: translate3d(0, 0, 18px);
+  will-change: transform;
+}
+
+.reference-cover-card:hover .reference-cover-image {
+  transform: translate3d(0, -5px, 34px) scale(1.04);
+}
+
+.footer-embossed-word {
+  position: absolute;
+  left: 50%;
+  bottom: -0.22em;
+  z-index: 0;
+  width: max-content;
+  max-width: 118vw;
+  pointer-events: none;
+  user-select: none;
+  color: color-mix(in srgb, var(--foreground) 4%, white 96%);
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 14vw, 13.5rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 0.78;
+  opacity: 0.95;
+  margin-bottom: 8vh;
+  transform: translateX(-50%);
+  text-shadow:
+    0 -1px 1px color-mix(in srgb, white 88%, transparent),
+    0 1px 2px color-mix(in srgb, black 10%, transparent),
+    0 10px 28px color-mix(in srgb, var(--accent) 10%, transparent),
+    -18px 18px 34px color-mix(in srgb, var(--secondary-accent) 12%, transparent);
+}
+
+.dark .footer-embossed-word {
+  color: color-mix(in srgb, white 6%, transparent);
+  opacity: 0.78;
+  
+}
+
+@keyframes reference-cover-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -5px;
+  }
+}
+
+@keyframes project-cover-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
 .home-primary-cta {
   isolation: isolate;
   background: var(--accent) !important;
@@ -656,6 +831,10 @@ html.lenis body {
   .service-showcase-card img,
   .section-accent-card,
   .section-accent-card::before,
+  .project-cover-flow-card,
+  .project-cover-flow-card-inner,
+  .reference-cover-card,
+  .reference-cover-image,
   .home-primary-cta::before,
   .home-wave-cta::before,
   .service-card::before,
