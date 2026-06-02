@@ -75,6 +75,10 @@ export const stats = [
 export const services: Array<{
   title: string;
   description: string;
+  icon: HomeIconName;
+  accent: string;
+  features: string[];
+  ctaLabel: string;
   image: {
     alt: string;
     src: string;
@@ -86,6 +90,14 @@ export const services: Array<{
     title: "Web Development",
     description:
       "End-to-end web solutions combining the latest technologies with robust project management, from landing pages to complex enterprise platforms.",
+    icon: "globe",
+    accent: "#38bdf8",
+    features: [
+      "Responsive web platforms",
+      "Secure backend systems",
+      "Performance optimization",
+    ],
+    ctaLabel: "Build My Website",
     image: {
       alt: "Web development interface illustration",
       src: "/images/apiImage.webp",
@@ -96,6 +108,14 @@ export const services: Array<{
     title: "Mobile App Development",
     description:
       "Enterprise mobility solutions for iOS and Android, from strategy and design through development, testing, and deployment.",
+    icon: "smartphone",
+    accent: "#22c55e",
+    features: [
+      "iOS and Android apps",
+      "Cross-platform builds",
+      "Testing and launch support",
+    ],
+    ctaLabel: "Launch My App",
     image: {
       alt: "Mobile app development illustration",
       src: "/images/mobileDevelopemnt.webp",
@@ -106,6 +126,14 @@ export const services: Array<{
     title: "Desktop Applications",
     description:
       "Legacy migrations or greenfield builds with lower risk, clear timelines, and practical cross-platform desktop expertise.",
+    icon: "monitor",
+    accent: "#f97316",
+    features: [
+      "Business workflow tools",
+      "Legacy modernization",
+      "Secure offline systems",
+    ],
+    ctaLabel: "Create My App",
     image: {
       alt: "Desktop application solution illustration",
       src: "/images/sale.webp",
@@ -116,6 +144,14 @@ export const services: Array<{
     title: "Email Marketing",
     description:
       "Tailored campaigns for each audience segment that engage new customers and nurture existing relationships with measurable ROI.",
+    icon: "mail",
+    accent: "#f59e0b",
+    features: [
+      "Campaign planning",
+      "Automated journeys",
+      "Templates and analytics",
+    ],
+    ctaLabel: "Plan Campaigns",
     image: {
       alt: "Email marketing campaign illustration",
       src: "/images/email-marketing-campaign-announcement.webp",
@@ -126,6 +162,14 @@ export const services: Array<{
     title: "Digital Marketing",
     description:
       "PPC, SEO, and SMM strategies that give your brand first-page visibility and stronger reach across search and social channels.",
+    icon: "trendingUp",
+    accent: "#ff2d6f",
+    features: [
+      "SEO and local visibility",
+      "Paid media campaigns",
+      "Lead generation funnels",
+    ],
+    ctaLabel: "Grow My Reach",
     image: {
       alt: "Digital marketing promotion illustration",
       src: "/images/online-marketing-promotion-3d-cartoon.webp",
@@ -133,9 +177,17 @@ export const services: Array<{
     href: "#contact",
   },
   {
-    title: "Custom Solutions",
+    title: "Custom Software Solutions",
     description:
       "Have a unique challenge? We build bespoke software that solves problems no off-the-shelf product can handle.",
+    icon: "sparkles",
+    accent: "#22c55e",
+    features: [
+      "Workflow automation",
+      "Integrations and APIs",
+      "Custom dashboards",
+    ],
+    ctaLabel: "Design My Solution",
     image: {
       alt: "Custom software solution illustration",
       src: "/images/customeSolution.webp",
@@ -164,17 +216,83 @@ export const aboutFeatures = [
   },
 ];
 
-export const techStack = [
-  "React",
-  "Node.js",
-  "Flutter",
-  "PHP / Laravel",
-  "React Native",
-  "Python",
-  "MySQL",
-  "MongoDB",
-  "AWS",
-  "Firebase",
+export const techStack: Array<{
+  name: string;
+  image: {
+    alt: string;
+    src: string;
+  };
+}> = [
+  {
+    name: "React",
+    image: {
+      alt: "React logo",
+      src: "/images/tech-stack/react.svg",
+    },
+  },
+  {
+    name: "Node.js",
+    image: {
+      alt: "Node.js logo",
+      src: "/images/tech-stack/node-js.svg",
+    },
+  },
+  {
+    name: "Flutter",
+    image: {
+      alt: "Flutter logo",
+      src: "/images/tech-stack/flutter.svg",
+    },
+  },
+  {
+    name: "PHP / Laravel",
+    image: {
+      alt: "PHP and Laravel logo",
+      src: "/images/tech-stack/php-laravel.svg",
+    },
+  },
+  {
+    name: "React Native",
+    image: {
+      alt: "React Native logo",
+      src: "/images/tech-stack/react-native.svg",
+    },
+  },
+  {
+    name: "Python",
+    image: {
+      alt: "Python logo",
+      src: "/images/tech-stack/python.svg",
+    },
+  },
+  {
+    name: "MySQL",
+    image: {
+      alt: "MySQL logo",
+      src: "/images/tech-stack/mysql.svg",
+    },
+  },
+  {
+    name: "MongoDB",
+    image: {
+      alt: "MongoDB logo",
+      src: "/images/tech-stack/mongodb.svg",
+    },
+  },
+  {
+    name: "AWS",
+    image: {
+      alt: "AWS logo",
+      src: "/images/tech-stack/aws.svg",
+    },
+  },
+  {
+    name: "Firebase",
+    image: {
+      alt: "Firebase logo",
+      src: "/images/tech-stack/firebase.svg",
+    },
+  },
 ];
 
 export const productFeatures = [

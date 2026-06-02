@@ -1,6 +1,8 @@
+import type { CSSProperties } from "react";
 import { services } from "../data/homeContent";
 import { FadeIn } from "./FadeIn";
 import { HomeButtonLink } from "./HomeButtonLink";
+import { HomeIcon } from "./HomeIcon";
 import { SectionHeader } from "./SectionHeader";
 
 const getServiceImageSrcSet = (src: string) => {
@@ -33,42 +35,57 @@ export function ServicesSection() {
         </FadeIn>
 
         <FadeIn>
-          <div className="grid items-stretch overflow-hidden rounded-lg border border-border bg-border [grid-auto-rows:minmax(0,1fr)] md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid items-stretch gap-5 [grid-auto-rows:minmax(0,1fr)] md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
               <article
-                className={`service-card group relative flex h-full min-h-[390px] min-w-0 flex-col overflow-hidden bg-card p-8 transition duration-300 hover:bg-muted hover:shadow-xl hover:shadow-foreground/5 dark:bg-[#0a0a0a] dark:hover:bg-[#131312] ${
-                  service.highlighted
-                    ? "bg-accent/10 dark:bg-accent/[0.03]"
-                    : ""
-                }`}
+                className="service-showcase-card group relative flex h-full min-h-[390px] min-w-0 flex-col overflow-hidden rounded-lg border p-5 sm:p-6"
                 key={service.title}
+                style={{ "--service-accent": service.accent } as CSSProperties}
               >
-                <div className="relative z-10 mb-7 flex h-28 w-full items-center justify-start">
+                <div className="relative z-10 mb-7 flex min-h-16 items-start justify-between gap-4">
+                  <div className="service-showcase-icon flex h-14 w-14 shrink-0 items-center justify-center rounded-lg border">
+                    <HomeIcon name={service.icon} className="h-5 w-5" />
+                  </div>
                   <img
                     src={service.image.src}
                     srcSet={getServiceImageSrcSet(service.image.src)}
-                    sizes="(max-width: 639px) 96px, 192px"
+                    sizes="(max-width: 639px) 96px, 128px"
                     alt={service.image.alt}
-                    width="96"
+                    width="128"
                     height="96"
                     loading="lazy"
                     decoding="async"
-                    className="h-24 w-24 object-contain transition-transform duration-300 group-hover:scale-105"
+                    className="h-16 w-24 object-contain object-right drop-shadow-[0_14px_20px_rgba(0,0,0,0.2)] transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-105 sm:h-20 sm:w-28"
                   />
                 </div>
-                <h3 className="relative z-10 min-h-14 font-display text-xl font-bold leading-7 text-card-foreground">
+                <h3 className="relative z-10 font-display text-xl font-bold leading-tight text-white">
                   {service.title}
                 </h3>
-                <p className="relative z-10 mt-3 text-sm font-light leading-7 text-muted-foreground">
+                <p className="relative z-10 mt-3 text-sm font-light leading-6 text-[#b8c9e7]">
                   {service.description}
                 </p>
-                <div className="relative z-10 mt-auto pt-8">
+
+                <ul className="relative z-10 mt-5 space-y-3">
+                  {service.features.map((feature) => (
+                    <li
+                      className="flex min-w-0 items-center gap-3 text-sm leading-5 text-white"
+                      key={feature}
+                    >
+                      <span className="service-feature-check flex h-5 w-5 shrink-0 items-center justify-center rounded-full">
+                        <HomeIcon name="check" className="h-3 w-3" />
+                      </span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="relative z-10 mt-auto pt-6">
                   <HomeButtonLink
                     href={service.href}
-                    className="home-wave-cta px-6"
+                    className="home-wave-cta w-full px-5"
                     variant="ghost"
                   >
-                    {service.highlighted ? "Contact us" : "Learn more"}
+                    {service.ctaLabel}
                   </HomeButtonLink>
                 </div>
               </article>

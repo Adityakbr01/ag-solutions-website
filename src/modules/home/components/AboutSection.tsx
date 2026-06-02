@@ -49,14 +49,27 @@ export function AboutSection() {
           <p className="mt-8 text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
             Technologies We Use
           </p>
-          <div className="mt-4 flex flex-wrap gap-2.5">
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {techStack.map((tech) => (
-              <span
-                className="rounded-full border border-border bg-muted px-3.5 py-1.5 text-xs text-muted-foreground dark:border-white/[0.08] dark:bg-white/[0.05] dark:text-[#b5b5ad]"
-                key={tech}
+              <div
+                className="flex min-h-14 min-w-0 items-center gap-3 rounded-lg border border-border bg-muted/70 px-3 py-2.5 dark:border-white/[0.08] dark:bg-white/[0.05]"
+                key={tech.name}
               >
-                {tech}
-              </span>
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-background shadow-sm dark:bg-[#0f172a]">
+                  <img
+                    src={tech.image.src}
+                    alt={tech.image.alt}
+                    width="28"
+                    height="28"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-7 w-7 object-contain"
+                  />
+                </span>
+                <span className="min-w-0 text-sm font-medium leading-5 text-foreground">
+                  {tech.name}
+                </span>
+              </div>
             ))}
           </div>
         </FadeIn>
