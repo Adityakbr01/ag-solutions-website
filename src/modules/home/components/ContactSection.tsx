@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import { getFormString, getUtmValues, submitEnquiry } from "@/lib/enquiry";
 import { contactInfo } from "../data/homeContent";
 import { FadeIn } from "./FadeIn";
 import { HomeIcon } from "./HomeIcon";
@@ -31,7 +32,38 @@ const contactMethods: Array<{
 ];
 
 export function ContactSection() {
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [formStatus, setFormStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [formMessage, setFormMessage] = useState("");
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    setFormStatus("submitting");
+    setFormMessage("");
+
+    try {
+      await submitEnquiry({
+        email: getFormString(formData, "email"),
+        fullName: getFormString(formData, "fullName"),
+        message: getFormString(formData, "message"),
+        mobile: getFormString(formData, "mobile"),
+        ...getUtmValues(),
+      });
+
+      form.reset();
+      setFormStatus("success");
+      setFormMessage("Thanks. Your enquiry has been sent.");
+    } catch {
+      setFormStatus("error");
+      setFormMessage(
+        "Sorry, your enquiry could not be sent. Please call or email us.",
+      );
+    }
+  };
 
   return (
     <FadeIn>
@@ -86,40 +118,89 @@ export function ContactSection() {
 
           <div className="section-accent-card relative z-10 overflow-hidden rounded-lg border border-slate-200 bg-slate-50/85 p-6 dark:border-white/[0.08] dark:bg-white/[0.05]">
             <h3 className="font-display text-xl font-bold text-slate-950 dark:text-white">
-              Stay in the loop
+              Start a conversation
             </h3>
             <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
-              Get our newsletter with tech insights and project spotlights.
+              Share your requirement and our team will contact you shortly.
             </p>
             <form
-              className="mt-7 flex flex-col gap-3 sm:flex-row"
-              onSubmit={(event) => {
-                event.preventDefault();
-                setIsSubscribed(true);
-              }}
+              className="mt-7 flex flex-col gap-3"
+              onSubmit={handleSubmit}
             >
-              <label className="sr-only" htmlFor="newsletter-email">
-                Email address
+              <label className="sr-only" htmlFor="home-contact-name">
+                Full name
               </label>
               <input
-                id="newsletter-email"
-                type="email"
-                required
-                placeholder="your@email.com"
+                autoComplete="name"
+                id="home-contact-name"
+                name="fullName"
+                placeholder="Full name"
                 className="min-h-12 flex-1 rounded-full border border-slate-200 bg-white px-5 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-accent/60 dark:border-white/[0.08] dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500"
+                required
+                type="text"
+              />
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div>
+                  <label className="sr-only" htmlFor="home-contact-email">
+                    Email address
+                  </label>
+                  <input
+                    autoComplete="email"
+                    className="min-h-12 w-full rounded-full border border-slate-200 bg-white px-5 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-accent/60 dark:border-white/[0.08] dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500"
+                    id="home-contact-email"
+                    name="email"
+                    placeholder="Email address"
+                    required
+                    type="email"
+                  />
+                </div>
+                <div>
+                  <label className="sr-only" htmlFor="home-contact-mobile">
+                    Mobile number
+                  </label>
+                  <input
+                    autoComplete="tel"
+                    className="min-h-12 w-full rounded-full border border-slate-200 bg-white px-5 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-accent/60 dark:border-white/[0.08] dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500"
+                    id="home-contact-mobile"
+                    name="mobile"
+                    placeholder="Mobile number"
+                    required
+                    type="tel"
+                  />
+                </div>
+              </div>
+              <label className="sr-only" htmlFor="home-contact-message">
+                Message
+              </label>
+              <textarea
+                className="min-h-28 resize-none rounded-[20px] border border-slate-200 bg-white px-5 py-4 text-sm text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-accent/60 dark:border-white/[0.08] dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500"
+                id="home-contact-message"
+                name="message"
+                placeholder="Tell us about your project"
+                required
               />
               <Button
+                disabled={formStatus === "submitting"}
                 type="submit"
-                className="flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-accent px-7 text-sm font-semibold text-accent-foreground hover:bg-accent/85"
+                className="flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-accent px-7 text-sm font-semibold text-accent-foreground hover:bg-accent/85 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                <span>Subscribe</span>
+                <span>
+                  {formStatus === "submitting" ? "Sending..." : "Send Enquiry"}
+                </span>
                 <HomeIcon name="arrowRight" className="h-4 w-4" />
               </Button>
             </form>
-            <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-              {isSubscribed
-                ? "Thanks. You are on the list."
-                : "No spam, unsubscribe any time."}
+            <p
+              aria-live="polite"
+              className={`mt-3 text-xs font-medium ${
+                formStatus === "success"
+                  ? "text-emerald-700 dark:text-emerald-300"
+                  : formStatus === "error"
+                    ? "text-red-600 dark:text-red-300"
+                    : "text-slate-500 dark:text-slate-400"
+              }`}
+            >
+              {formMessage || "We will use your details only to reply to you."}
             </p>
             <img
               src="/images/noSpam.webp"

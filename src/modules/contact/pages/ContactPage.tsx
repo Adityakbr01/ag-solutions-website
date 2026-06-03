@@ -1,6 +1,7 @@
-import type { FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { motion } from "motion/react";
 import { HomeIcon, type HomeIconName } from "@/modules/home/components/HomeIcon";
+import { getFormString, getUtmValues, submitEnquiry } from "@/lib/enquiry";
 import { contactInfo } from "@/modules/home/data/homeContent";
 import { ContactSEO } from "../seo/ContactSEO";
 
@@ -200,8 +201,40 @@ function ContactInput({
 }
 
 export const ContactPage = () => {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const [formStatus, setFormStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [formMessage, setFormMessage] = useState("");
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const subject = getFormString(formData, "subject");
+    const details = getFormString(formData, "details");
+    const message = subject ? `${subject}\n\n${details}` : details;
+
+    setFormStatus("submitting");
+    setFormMessage("");
+
+    try {
+      await submitEnquiry({
+        email: getFormString(formData, "email"),
+        fullName: getFormString(formData, "fullName"),
+        message,
+        mobile: getFormString(formData, "phoneNumber"),
+        ...getUtmValues(),
+      });
+
+      form.reset();
+      setFormStatus("success");
+      setFormMessage("Thanks. Your enquiry has been sent.");
+    } catch {
+      setFormStatus("error");
+      setFormMessage(
+        "Sorry, your enquiry could not be sent. Please call or email us.",
+      );
+    }
   };
 
   return (
@@ -289,12 +322,27 @@ export const ContactPage = () => {
                 </div>
 
                 <button
+                  disabled={formStatus === "submitting"}
                   className="group relative flex h-14 w-full items-center justify-center overflow-hidden rounded-[12px] bg-foreground text-sm font-bold text-background transition hover:bg-foreground/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 dark:bg-white dark:text-black dark:hover:bg-white/90 dark:focus-visible:ring-white/50"
                   type="submit"
                 >
                   <span className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 skew-x-[-18deg] bg-gradient-to-r from-transparent via-background/35 to-transparent transition-transform duration-700 group-hover:translate-x-[430%] dark:via-black/25" />
-                  <span className="relative">Submit</span>
+                  <span className="relative">
+                    {formStatus === "submitting" ? "Sending..." : "Submit"}
+                  </span>
                 </button>
+                {formMessage && (
+                  <p
+                    aria-live="polite"
+                    className={`px-1 text-xs font-medium ${
+                      formStatus === "success"
+                        ? "text-emerald-700 dark:text-emerald-300"
+                        : "text-red-600 dark:text-red-300"
+                    }`}
+                  >
+                    {formMessage}
+                  </p>
+                )}
               </div>
             </motion.form>
           </div>
