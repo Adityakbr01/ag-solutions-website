@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,9 +10,102 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CARD_Y_OFFSET = 5;
 const CARD_SCALE_STEP = 0.075;
+const STACK_DEPTH_LIMIT = 7;
 const MOBILE_TAG_LIMIT = 7;
+const PROJECTS_API_URL =
+  "https://ag-solutions.in/webapi/public/api/getProjects/all";
+const PROJECT_IMAGE_BASE_URL =
+  "https://ag-solutions.in/webapi/public/assets/images/project_images/";
+const NO_IMAGE_URL =
+  "https://ag-solutions.in/webapi/public/assets/images/no_image.jpg";
 
-const PROJECTS = [
+type ProjectApiItem = {
+  page: string | null;
+  project_sort: number | null;
+  project_name: string | null;
+  project_type: string | null;
+  project_description: string | null;
+  project_image: string | null;
+  project_image_alt: string | null;
+};
+
+type ProjectImageSource = {
+  image_for: string | null;
+  image_url: string | null;
+};
+
+type ProjectsApiResponse = {
+  data?: ProjectApiItem[];
+  image_url?: ProjectImageSource[];
+};
+
+type PortfolioProject = {
+  id: string;
+  tag: string;
+  title: string;
+  description: string;
+  tech: string[];
+  image: string;
+  imageAlt: string;
+  color: string;
+  zIndex: number;
+};
+
+type PageMeta = {
+  label: string;
+  color: string;
+  description: string;
+};
+
+const PAGE_ORDER = [
+  "web_development",
+  "mobile_app_development",
+  "desktop_application",
+  "export_documentation_and_mangement_solutions",
+  "ease_marketing",
+  "grow_together",
+] as const;
+
+const PAGE_META: Record<string, PageMeta> = {
+  web_development: {
+    label: "Web Development",
+    color: "#24466f",
+    description: "A live web project from the AG Solutions portfolio.",
+  },
+  mobile_app_development: {
+    label: "Mobile App Development",
+    color: "#2f6f5e",
+    description: "A mobile experience built for practical business use.",
+  },
+  desktop_application: {
+    label: "Desktop Applications",
+    color: "#594a7b",
+    description: "A business desktop workflow designed for daily operations.",
+  },
+  export_documentation_and_mangement_solutions: {
+    label: "Export Documentation",
+    color: "#9b5a2e",
+    description: "A product screen from export documentation workflows.",
+  },
+  ease_marketing: {
+    label: "EASE Marketing",
+    color: "#8f3f54",
+    description: "A product screen from the EASE Marketing platform.",
+  },
+  grow_together: {
+    label: "Grow Together",
+    color: "#286f69",
+    description: "A product screen from the Grow Together platform.",
+  },
+};
+
+const DEFAULT_PAGE_META: PageMeta = {
+  label: "Portfolio Project",
+  color: "#24466f",
+  description: "A project delivered by AG Solutions.",
+};
+
+const FALLBACK_PROJECTS: PortfolioProject[] = [
   {
     id: "card-1",
     tag: "Web Development",
@@ -30,6 +123,7 @@ const PROJECTS = [
       "SEO Ready",
     ],
     image: "/images/apiImage.webp",
+    imageAlt: "Websites, portals, and SaaS platforms preview",
     color: "#24466f",
     zIndex: 6,
   },
@@ -50,6 +144,7 @@ const PROJECTS = [
       "Deployment",
     ],
     image: "/images/mobileDevelopemnt.webp",
+    imageAlt: "Android, iOS, and cross-platform apps preview",
     color: "#2f6f5e",
     zIndex: 5,
   },
@@ -70,6 +165,7 @@ const PROJECTS = [
       "Reporting",
     ],
     image: "/images/online-marketing-promotion-3d-cartoon.webp",
+    imageAlt: "SEO, PPC, and social growth campaigns preview",
     color: "#8f3f54",
     zIndex: 4,
   },
@@ -90,6 +186,7 @@ const PROJECTS = [
       "ROI Reports",
     ],
     image: "/images/email-marketing-campaign-announcement.webp",
+    imageAlt: "Campaigns, templates, and automation preview",
     color: "#9b5a2e",
     zIndex: 3,
   },
@@ -110,6 +207,7 @@ const PROJECTS = [
       "Support",
     ],
     image: "/images/sale.webp",
+    imageAlt: "Business tools and internal apps preview",
     color: "#594a7b",
     zIndex: 2,
   },
@@ -130,18 +228,161 @@ const PROJECTS = [
       "Maintenance",
     ],
     image: "/images/customeSolution.webp",
+    imageAlt: "Automation, APIs, and dashboards preview",
     color: "#286f69",
     zIndex: 1,
   },
-] as const;
+] as const satisfies PortfolioProject[];
+
+const getCleanText = (value: string | null | undefined) => value?.trim() ?? "";
+
+const getStackDepth = (depth: number) =>
+  Math.min(Math.max(depth, 0), STACK_DEPTH_LIMIT);
+
+const getStackYPercent = (depth: number) =>
+  -50 + getStackDepth(depth) * CARD_Y_OFFSET;
+
+const getStackScale = (depth: number) =>
+  1 - getStackDepth(depth) * CARD_SCALE_STEP;
+
+const getPageMeta = (page: string | null | undefined) =>
+  page ? PAGE_META[page] ?? DEFAULT_PAGE_META : DEFAULT_PAGE_META;
+
+const getProjectImageBaseUrl = (payload: ProjectsApiResponse) =>
+  payload.image_url?.find((item) => item.image_for === "Projects")?.image_url ??
+  PROJECT_IMAGE_BASE_URL;
+
+const getNoImageUrl = (payload: ProjectsApiResponse) =>
+  payload.image_url?.find((item) => item.image_for === "No Image")?.image_url ??
+  NO_IMAGE_URL;
+
+const getProjectImageUrl = (
+  imageName: string,
+  imageBaseUrl: string,
+  noImageUrl: string,
+) => {
+  if (!imageName) {
+    return noImageUrl;
+  }
+
+  try {
+    return new URL(imageName, imageBaseUrl).toString();
+  } catch {
+    return `${imageBaseUrl}${imageName}`;
+  }
+};
+
+const buildProjectDescription = (project: ProjectApiItem, meta: PageMeta) => {
+  const description = getCleanText(project.project_description);
+  const projectType = getCleanText(project.project_type);
+
+  if (description) {
+    return description;
+  }
+
+  if (projectType) {
+    return `${projectType} project from our ${meta.label} portfolio.`;
+  }
+
+  return meta.description;
+};
+
+const buildProjectTech = (project: ProjectApiItem, meta: PageMeta) =>
+  [meta.label, getCleanText(project.project_type)].filter(Boolean);
+
+const getPageSortIndex = (page: string | null) => {
+  const index = page ? PAGE_ORDER.indexOf(page as (typeof PAGE_ORDER)[number]) : -1;
+
+  return index === -1 ? PAGE_ORDER.length : index;
+};
+
+const normalizeProjects = (payload: ProjectsApiResponse): PortfolioProject[] => {
+  const imageBaseUrl = getProjectImageBaseUrl(payload);
+  const noImageUrl = getNoImageUrl(payload);
+  const projects = payload.data ?? [];
+
+  return [...projects]
+    .sort((current, next) => {
+      const currentSort = current.project_sort ?? Number.MAX_SAFE_INTEGER;
+      const nextSort = next.project_sort ?? Number.MAX_SAFE_INTEGER;
+
+      if (currentSort !== nextSort) {
+        return currentSort - nextSort;
+      }
+
+      return getPageSortIndex(current.page) - getPageSortIndex(next.page);
+    })
+    .map((project, index, sortedProjects) => {
+      const meta = getPageMeta(project.page);
+      const title =
+        getCleanText(project.project_name) || `Project ${index + 1}`;
+      const imageName = getCleanText(project.project_image);
+      const image = getProjectImageUrl(imageName, imageBaseUrl, noImageUrl);
+      const imageAlt =
+        getCleanText(project.project_image_alt) || `${title} project preview`;
+
+      return {
+        id: `${project.page ?? "project"}-${project.project_sort ?? index}-${imageName || index}`,
+        tag: meta.label,
+        title,
+        description: buildProjectDescription(project, meta),
+        tech: buildProjectTech(project, meta),
+        image,
+        imageAlt,
+        color: meta.color,
+        zIndex: sortedProjects.length - index,
+      };
+    });
+};
 
 export function PortfolioSection() {
+  const [projects, setProjects] =
+    useState<PortfolioProject[]>(FALLBACK_PROJECTS);
   const sectionRef = useRef<HTMLElement>(null);
-  const cardRefs = useRef<HTMLDivElement[]>([]);
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const projectCards = useMemo(
+    () => (projects.length > 0 ? projects : FALLBACK_PROJECTS),
+    [projects],
+  );
+
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+
+    const loadProjects = async () => {
+      try {
+        const response = await fetch(PROJECTS_API_URL, {
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error("Projects request failed");
+        }
+
+        const payload = (await response.json()) as ProjectsApiResponse;
+        const normalizedProjects = normalizeProjects(payload);
+
+        if (isMounted && normalizedProjects.length > 0) {
+          setProjects(normalizedProjects);
+        }
+      } catch {
+        if (isMounted) {
+          setProjects(FALLBACK_PROJECTS);
+        }
+      }
+    };
+
+    void loadProjects();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const cards = cardRefs.current.filter(Boolean);
+    const cards = cardRefs.current.slice(0, projectCards.length).filter(Boolean);
     const totalCards = cards.length;
 
     if (!section || totalCards === 0) {
@@ -153,8 +394,8 @@ export function PortfolioSection() {
     cards.forEach((card, index) => {
       gsap.set(card, {
         xPercent: -50,
-        yPercent: -50 + index * CARD_Y_OFFSET,
-        scale: 1 - index * CARD_SCALE_STEP,
+        yPercent: getStackYPercent(index),
+        scale: getStackScale(index),
         rotationX: 0,
         force3D: true,
       });
@@ -200,9 +441,9 @@ export function PortfolioSection() {
           } else {
             const effectiveBehind = index - activeIndex - segProgress;
             gsap.set(card, {
-              yPercent: -50 + effectiveBehind * CARD_Y_OFFSET,
+              yPercent: getStackYPercent(effectiveBehind),
               rotationX: 0,
-              scale: 1 - effectiveBehind * CARD_SCALE_STEP,
+              scale: getStackScale(effectiveBehind),
             });
           }
         });
@@ -210,7 +451,7 @@ export function PortfolioSection() {
     });
 
     return () => trigger.kill();
-  }, []);
+  }, [projectCards.length]);
 
   return (
     <section
@@ -220,10 +461,10 @@ export function PortfolioSection() {
       style={{ perspective: "850px", transformStyle: "preserve-3d" }}
     >
       <p className="absolute top-4 md:top-8 left-1/2 -translate-x-1/2 text-[10px] md:text-3xl sm:text-sm tracking-[0.25em] text-white/50 uppercase z-30 whitespace-nowrap pointer-events-none select-none">
-        Agency Services
+        Client Portfolio
       </p>
 
-      {PROJECTS.map((project, index) => {
+      {projectCards.map((project, index) => {
         const mobileTags = project.tech.slice(0, MOBILE_TAG_LIMIT);
         const mobileExtra = project.tech.length - MOBILE_TAG_LIMIT;
 
@@ -232,7 +473,7 @@ export function PortfolioSection() {
             key={project.id}
             id={project.id}
             ref={(el) => {
-              if (el) cardRefs.current[index] = el;
+              cardRefs.current[index] = el;
             }}
             style={{
               backgroundColor: project.color,
@@ -257,7 +498,7 @@ export function PortfolioSection() {
               >
                 <LazyImage
                   src={project.image}
-                  alt={`${project.title} preview`}
+                  alt={project.imageAlt}
                   width={900}
                   height={600}
                   className="object-cover"
@@ -350,7 +591,7 @@ export function PortfolioSection() {
               <div className="relative flex-1 h-full rounded-xl overflow-hidden">
                 <LazyImage
                   src={project.image}
-                  alt={`${project.title} preview`}
+                  alt={project.imageAlt}
                   width={900}
                   height={600}
                   className="object-cover"
